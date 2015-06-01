@@ -60,7 +60,9 @@
     <Content Include="Content\css\bootstrap-theme.css.map" />
     <Content Include="Content\css\bootstrap.css.map" />
     <Content Include="Content\css\images\Thumbs.db" />
+    <Content Include="Content\image\minus.png" />
     <Content Include="Content\image\Thumbs.db" />
+    <Content Include="Content\image\wishlist.png" />
     <Content Include="Master1.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -101,9 +103,7 @@
     <Content Include="Content\image\down_arrow.png" />
     <Content Include="Content\image\edit.png" />
     <Content Include="Content\image\info.png" />
-    <Content Include="Content\image\logo-navbar1.png" />
     <Content Include="Content\image\logo1.png" />
-    <Content Include="Content\image\Picture8.png" />
     <Content Include="Content\image\refresh.png" />
     <Content Include="Korisnik.aspx" />
     <Content Include="History.aspx" />
