@@ -19,12 +19,7 @@ namespace MacedonianRedCrossYouth
             }
         }*/
 
-        protected void btnAddIncome_Click(object sender, EventArgs e)
-        {
-            dodadiPrihod();
-        }
-
-        private void dodadiPrihod()
+        private void dodadiTransakcija()
         {
             double price = Convert.ToDouble(tbPrice.Text);
             string name = tbName.Text;
@@ -43,29 +38,24 @@ namespace MacedonianRedCrossYouth
                 //comment_id=
             }
             int user_id = int.Parse(Session["user_id"].ToString());
-            
             //Funkcija za dodavanje u baza so parametrite od pogore
+
+            //Ako e wishlist, dodavanje u tabela za wishlist kreiranata transakcija
         }
 
-        protected void btnAddExpenditure_Click(object sender, EventArgs e)
+        protected void btnAddExpenditure_Click(object sender, ImageClickEventArgs e)
         {
-            dodadiRashod();
+            dodadiTransakcija();
         }
 
-        private void dodadiRashod()
+        protected void btnAddIncome_Click(object sender, ImageClickEventArgs e)
         {
-            //Slicno na funkcijata za Prihod
+            dodadiTransakcija();
         }
 
-        protected void btnAddWishlist_Click(object sender, EventArgs e)
+        protected void btnAddWish_Click(object sender, ImageClickEventArgs e)
         {
-            dodadiZelba();
+            dodadiTransakcija();
         }
-
-        private void dodadiZelba()
-        {
-            //Slicno na funkcijata za Prihod, moze da se naprave samo edna funkcija za site tri slicaja
-        }
-
     }
 }
