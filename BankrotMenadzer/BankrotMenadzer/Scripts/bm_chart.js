@@ -58,6 +58,7 @@ function putPieChart(canvasID, data) {
 
     var chartData = convertDataToChartData(data);
     var myPieChart = new Chart(ctx).Pie(chartData, options);
+    $("#chart-legend").html(generateLegend(chartData));
 }
 
 function convertDataToChartData(data) {
@@ -80,4 +81,17 @@ function convertDataToChartData(data) {
         });
     }
     return chartArray;
+}
+
+function generateLegend(data) {
+
+    var html = '<ul style="list-style-type: none">';
+
+    for (i = 0; i < data.length; i++) {
+        var item = data[i];
+        html += '<li><div style="display: inline-block; width: 60px; height:12px; background-color: ' + item.color + '"></div>' + item.label + '</li>';
+    }
+
+    html += '</ul>';
+    return html;
 }

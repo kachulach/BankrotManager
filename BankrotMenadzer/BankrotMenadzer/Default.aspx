@@ -69,7 +69,12 @@
             </table>
         </div>
     </form>
-    <canvas id="chart_weekSpendings" width="400" height="400">
+    <div id="chart">
+        <canvas id="chart_weekSpendings" width="400" height="400">
 
-    </canvas>
+        </canvas>
+        <div id="chart-legend">
+
+        </div>
+    </div>
 </asp:Content>
