@@ -59,7 +59,6 @@ function AJAX_AddTransaction(event) {
 }
 
 function Success_AddTransaction(response) {
-    
     chart1.addData(response.d);
 
 }

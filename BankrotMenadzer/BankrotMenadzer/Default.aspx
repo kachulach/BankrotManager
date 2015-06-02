@@ -69,6 +69,7 @@
             </table>
         </div>
     </form>
+
     <div class="pie-chart-week">
         <canvas id="chart_weekSpendings" width="400" height="400">
 

@@ -73,16 +73,24 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
         }
         if (index != -1) {
             this.chart.segments[index].value = obj.value;
-            this.chart.update();
         }
         else {
+            var objColor = getColor(this.chart.segments.length);
+            obj.color = objColor;
             this.chart.addData(obj);
         }
-        console.log(this.chart);
+        this.refresh(obj);
     }
 
-    this.refresh = function() {
+    this.refresh = function(data) {
         this.chart.update();
+
+        this.data = this.convertChartDataToRaw();
+        this.chartData = this.convertDataToChartData(this.data);
+
+        if (this.hasLegend) {
+            this.parentElement.find(".chart-legend").html(this.generateLegend(this.chartData));
+        }
     }
 
     this.convertDataToChartData = function(data) {
@@ -96,7 +104,7 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
 
         for (i = 0; i < data.length; i++) {
             var item = data[i];
-            var color = colors[i];
+            var color = getColor(i);
 
             chartArray.push({
                 label: item.category,
@@ -107,14 +115,32 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
         return chartArray;
     }
 
+    this.convertChartDataToRaw = function () {
+
+        var data = this.chart.segments;
+        var arr = Array();
+        for (i = 0; i < data.length; i++) {
+            var segment = data[i];
+            arr.push({ category: segment.label, cost: segment.value });
+        }
+        return arr;
+    }
+
 
     this.generateLegend = function(data) {
+
+        var total = 0;
+
+        for (var i = 0, n = data.length; i < n; ++i) {
+            total += data[i].value;
+        }
 
         var html = '<ul style="list-style-type: none">';
 
         for (i = 0; i < data.length; i++) {
             var item = data[i];
-            html += '<li><div style="display: inline-block; width: 60px; height:12px; background-color: ' + item.color + '"></div>' + item.label + '</li>';
+            var percent = item.value / total;
+            html += '<li><div style="display: inline-block; width: 60px; height:12px; background-color: ' + item.color + '"></div>' + item.label + ' (' + Math.round(percent * 10000)/100 + '%)</li>';
         }
 
         html += '</ul>';
@@ -123,4 +149,20 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
 
     this.init();
     return this;
+}
+
+
+//This should be themable
+function getColor(number) {
+
+    var colors =   ["#232323",
+                    "#bbbbbb",
+                    "#ff3333",
+                    "#ffaaaa",
+                    "#eeeeee",
+                    "#bebebe"
+    ];
+    return colors[number];
+
+
 }
