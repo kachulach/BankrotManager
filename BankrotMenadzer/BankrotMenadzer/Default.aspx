@@ -3,10 +3,10 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentplaceHolder1" runat="server">
+    <script src="Scripts/bm_chart.js"></script>
     <script src="Scripts/TransactionsAPI.js"></script>
     <script src="Scripts/randomColor.js"></script>
     <script src="Scripts/Chart.min.js"></script>
-    <script src="Scripts/bm_chart.js"></script>
     <style>
         tr.highlight td {
             padding-bottom: 10px;
@@ -69,11 +69,21 @@
             </table>
         </div>
     </form>
-    <div id="chart">
+    <div class="pie-chart-week">
         <canvas id="chart_weekSpendings" width="400" height="400">
 
         </canvas>
-        <div id="chart-legend">
+        <div class="chart-legend">
+
+        </div>
+    </div>
+
+    
+    <div id="pie-chart-monthly">
+        <canvas id="chart_monthlySpendings" width="400" height="400">
+
+        </canvas>
+        <div class="chart-legend">
 
         </div>
     </div>

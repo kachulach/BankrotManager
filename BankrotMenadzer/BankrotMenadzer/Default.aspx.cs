@@ -4,6 +4,7 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -18,6 +19,23 @@ namespace MacedonianRedCrossYouth
                 Response.Redirect("Login.aspx");
             }
         }*/
+        private static Default instance;
+        protected override void OnLoad(EventArgs e)
+        {
+            instance = this;
+        }
+
+        private string AddTransaction()
+        {
+            var random = new Random().Next(0, 2000);
+            return "{ \"label\": \"Test1\", \"value\": \"" + random + "\", \"color\": \"#05b583\" }";
+        }
+
+        [WebMethod]
+        public static string AJAX_AddTransaction()
+        {
+            return instance.AddTransaction();
+        }
 
         private void dodadiTransakcija()
         {
@@ -56,6 +74,7 @@ namespace MacedonianRedCrossYouth
         protected void btnAddWish_Click(object sender, ImageClickEventArgs e)
         {
             dodadiTransakcija();
+            
         }
     }
 }

@@ -1,36 +1,24 @@
 ﻿$(document).ready(function () {
-
-    var testData = [
-
-        {
-            category: 'Groceries',
-            cost: 500
-        },
-        {
-            category: 'Bills',
-            cost: 1200
-        }, {
-            category: 'Luxuries',
-            cost: 200
-        },
-    ];
-
-
-    putPieChart("#chart_weekSpendings", testData);
-
+    
 });
 
-function putBarChart(canvasID, data) {
-    var canvas = $(id)[0];
-    var ctx = canvas.getContext("2d");
-}
 
-function putPieChart(canvasID, data) {
-    
-    var canvas = $(canvasID)[0];
-    var ctx = canvas.getContext("2d");
+///Constructor for BMChart object.
+///
+///canvasID - ID of the canvas you want to put the chart in to. Must start with #
+///chartType - string [ 'pie', 'bar' ]
+///data - must be an array of objects of type { category: 'String', cost: 'number' }
+///hasLegend - should a legend be put in the .chart-legend div.
+var BMChart = function (canvasID, chartType, data, options, hasLegend) {
 
-    var options = {
+    this.parentElement = null;
+    this.canvasID = canvasID;
+    this.chartType = chartType;
+    this.chart = null;
+    this.data = data;
+    this.chartData = null;
+    this.hasLegend = hasLegend;
+    this.options = {
         //Boolean - Whether we should show a stroke on each segment
         segmentShowStroke: true,
 
@@ -56,42 +44,83 @@ function putPieChart(canvasID, data) {
         animateScale: false,
     }
 
-    var chartData = convertDataToChartData(data);
-    var myPieChart = new Chart(ctx).Pie(chartData, options);
-    $("#chart-legend").html(generateLegend(chartData));
-}
+    this.init = function() {
+        this.context = $(canvasID)[0].getContext('2d');
+        this.chartData = this.convertDataToChartData(this.data);
+        this.parentElement = $(canvasID).parent();
+        //console.log("Chart to: " + canvasID);
+        switch (chartType) {
+            case 'pie': this.chart = new Chart(this.context).Pie(this.chartData, this.options); break;
+                //TODO Implement Bar charts
+            case 'bar': this.chart = new Chart(this.context).Bar("test"); break;
+        }
 
-function convertDataToChartData(data) {
 
-    var chartArray = Array();
+        if (this.hasLegend) {
+            this.parentElement.find(".chart-legend").html(this.generateLegend(this.chartData));
+        }
+    }
 
-    //There might be a better choice for predefined colors
-    var colors = randomColor({
-        count: data.length,
-    });
+    this.addData = function (jsonData) {
+        
+        var obj = JSON.parse(jsonData);
+        var index = -1;
+        for (i = 0; i < this.chart.segments.length; i++) {
+            if (this.chart.segments[i].label == obj.label) {
+                index = i;
+                break;
+            }
+        }
+        if (index != -1) {
+            this.chart.segments[index].value = obj.value;
+            this.chart.update();
+        }
+        else {
+            this.chart.addData(obj);
+        }
+        console.log(this.chart);
+    }
 
-    for (i = 0; i < data.length; i++) {
-        var item = data[i];
-        var color = colors[i];
+    this.refresh = function() {
+        this.chart.update();
+    }
 
-        chartArray.push({
-            label: item.category,
-            value: item.cost,
-            color: color
+    this.convertDataToChartData = function(data) {
+
+        var chartArray = Array();
+
+        //There might be a better choice for predefined colors
+        var colors = randomColor({
+            count: data.length,
         });
+
+        for (i = 0; i < data.length; i++) {
+            var item = data[i];
+            var color = colors[i];
+
+            chartArray.push({
+                label: item.category,
+                value: item.cost,
+                color: color
+            });
+        }
+        return chartArray;
     }
-    return chartArray;
-}
 
-function generateLegend(data) {
 
-    var html = '<ul style="list-style-type: none">';
+    this.generateLegend = function(data) {
 
-    for (i = 0; i < data.length; i++) {
-        var item = data[i];
-        html += '<li><div style="display: inline-block; width: 60px; height:12px; background-color: ' + item.color + '"></div>' + item.label + '</li>';
+        var html = '<ul style="list-style-type: none">';
+
+        for (i = 0; i < data.length; i++) {
+            var item = data[i];
+            html += '<li><div style="display: inline-block; width: 60px; height:12px; background-color: ' + item.color + '"></div>' + item.label + '</li>';
+        }
+
+        html += '</ul>';
+        return html;
     }
 
-    html += '</ul>';
-    return html;
+    this.init();
+    return this;
 }
