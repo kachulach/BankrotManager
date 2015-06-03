@@ -112,10 +112,12 @@
     <Content Include="Logout.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bm_chart.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery.tabs.js" />
     <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\TransactionsAPI.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

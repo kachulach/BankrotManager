@@ -11,7 +11,8 @@
     <script>
     </script>
 <body>
-    <nav class="navbar navbar-inverse" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
                 <span class="icon-bar"></span>
@@ -22,22 +23,22 @@
         </div>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-                <li id="liHome" runat="server">                     
+                <li id="liHome" runat="server">
                     <a href="Default.aspx" id="Home">
                         <span class="glyphicon glyphicon-home"></span> 
-                        <label class="label">Homepage</label>                        
+                        Overview
                     </a>
                 </li>
                 <li id="liHistory" runat="server">
                     <a href="History.aspx" id="History">
                         <span class="glyphicon glyphicon-stats"></span> 
-                        <label class="label">Stats</label>
+                        Stats
                     </a>
                 </li>
                 <li id="liWishlist" runat="server">
                     <a href="Wishlist.aspx" id="Wishlist">
                         <span class="glyphicon glyphicon-piggy-bank"></span> 
-                        <label class="label">Wishlist</label>
+                        Wishlist
                     </a>
                 </li>
             </ul>
@@ -51,10 +52,11 @@
                 <li>
                     <a href="Logout.aspx" id="btnLogout">
                         <span class="glyphicon glyphicon-log-out"></span> 
-                        <label class="label">Logout</label>
+                        Log Out
                     </a>
                 </li>
             </ul>
+        </div>
         </div>
     </nav>
     <script src="Scripts/jquery-2.1.0.js"></script>
