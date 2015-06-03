@@ -247,7 +247,145 @@ namespace BankrotMenadzer
             }
             return result;
         }
+        public DataTable getWishlist(int user_id)
+        {
+            MySqlConnection con = getConnection();
 
+            try
+            {
+                con.Open();
+
+                string query = "SELECT * FROM transaction "+
+                                "WHERE user_id=" + user_id + " AND wishlist=TRUE AND bought=FALSE";
+                
+                MySqlCommand command = new MySqlCommand(query, con);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataTable dt = new DataTable();
+
+                adapter.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public DataTable getBoughtItemsFromWishlist(int user_id)
+        {
+            MySqlConnection con = getConnection();
+
+            try
+            {
+                con.Open();
+
+                string query = "SELECT * FROM transaction " +
+                                "WHERE user_id=" + user_id + " AND price < 0 AND wishlist=TRUE AND bought=TRUE order By datum DESC";
+
+                MySqlCommand command = new MySqlCommand(query, con);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataTable dt = new DataTable();
+
+                adapter.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public DataTable getBoughtItems(int user_id)
+        {
+            MySqlConnection con = getConnection();
+
+            try
+            {
+                con.Open();
+
+                string query = "SELECT * FROM transaction " +
+                                "WHERE user_id=" + user_id + " AND price < 0  AND bought=TRUE order by datum DESC";
+
+                MySqlCommand command = new MySqlCommand(query, con);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataTable dt = new DataTable();
+
+                adapter.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+
+        public DataTable getIncomes(int user_id)
+        {
+            MySqlConnection con = getConnection();
+
+            try
+            {
+                con.Open();
+
+                string query = "SELECT * FROM transaction " +
+                                "WHERE user_id=" + user_id + " AND price > 0 AND bought=TRUE AND wishlist=FALSE";
+
+                MySqlCommand command = new MySqlCommand(query, con);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataTable dt = new DataTable();
+
+                adapter.Fill(dt);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        public string buyItemFromWishlist(int transaction_id)
+        {
+            MySqlConnection con = getConnection();
+            string result = "Ok";
+            try
+            {
+                con.Open();
+
+                string query = "UPDATE transaction " +
+                               "SET bought=TRUE " +
+                               "WHERE transaction_id=@transaction_id";
+
+                MySqlCommand command = new MySqlCommand(query, con);
+                command.Prepare();
+                command.Parameters.AddWithValue("@transaction_id", transaction_id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                result = "error: " + e.Message;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
         public string testConnection()
         {
             MySqlConnection con = getConnection();
