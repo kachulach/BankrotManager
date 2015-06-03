@@ -13,8 +13,8 @@ namespace MacedonianRedCrossYouth
     {
         public static DateTime firstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
         public static DateTime lastDay = firstDay.AddMonths(1).AddDays(-1);
-        protected void Page_Load(object sender, EventArgs e)
-        {
+        //protected void Page_Load(object sender, EventArgs e)
+       // {
             /* if (Session["user_id"] == null)
              {
                  Response.Redirect("Login.aspx");
@@ -219,6 +219,6 @@ namespace MacedonianRedCrossYouth
          }
 
             */
-        }
+       // }
     }
 }

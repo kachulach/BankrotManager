@@ -15,6 +15,7 @@ namespace MacedonianRedCrossYouth
     {
        protected void Page_Load(object sender, EventArgs e)
         {
+           /*
             if (!IsPostBack)
             {
                 Database db = new Database();
@@ -24,7 +25,7 @@ namespace MacedonianRedCrossYouth
 
                 ddCategory.DataSource = ds;
                 ddCategory.DataBind();
-            }
+            }*/
             // if (Session["user_id"] == null)
             // {
             //    Response.Redirect("Login.aspx");
@@ -40,6 +41,7 @@ namespace MacedonianRedCrossYouth
 
         private void dodadiTransakcija(int type)
         {
+            /* Ova  nadolu seto e tocno no e za verzijata pred dodavanje na bootstrap :)
             Database db = new Database();
 
             bool wishlist = type == 3;
@@ -77,7 +79,7 @@ namespace MacedonianRedCrossYouth
             {
                 db.addTransactionBezKomentar(category_id, user_id, price, datum, name, wishlist);
             }
-
+            */
         }
 
         protected void btnAddExpenditure_Click(object sender, ImageClickEventArgs e)
