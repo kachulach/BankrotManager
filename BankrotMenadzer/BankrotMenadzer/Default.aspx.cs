@@ -20,7 +20,6 @@ namespace BankrotManager
     public partial class Default : System.Web.UI.Page
     {
 
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -52,64 +51,76 @@ namespace BankrotManager
         }
 
 
-        private void dodadiTransakcija(int type)
+        private static void dodadiTransakcija(TransactionType type, string name, int amount, int category_id, DateTime date, string comment)
         {
 
-
+            if (type == null || name == null || amount < 0 || category_id < 0 || date == null)
+            {
+                return;
+            }
             ///* Ova  nadolu seto e tocno no e za verzijata pred dodavanje na bootstrap :)
             Database db = new Database();
-            /*
-            bool wishlist = type == 3;
-            int price = Math.Abs(Convert.ToInt32(tbPrice.Text));
-            if (type != 1)
+
+            int type_t = 1;
+            if (type == TransactionType.Spending)
             {
-                price *= -1;
+                type_t=2;
             }
-            string name = tbName.Text;
-            int category_id = 0;
-            if (ddCategory.SelectedIndex != -1)
+            if (type == TransactionType.Wishlist)
             {
-                category_id = Convert.ToInt32(ddCategory.SelectedItem.Value);
+                type_t = 3;
             }
-            DateTime datum = Convert.ToDateTime(tbDatum.Text);
-            int comment_id = 0;
+            
+            bool wishlist = type_t == 3;
+            if (type_t != 1)
+            {
+                amount *= -1;
+            }
+
+            //Da se komentira ovaa linija koga ke se dodade pole za datum vo dizajnot
+            date = DateTime.Now;
+ 
             // dali e ne prazen komentarot
-            if (!tbComment.Text.Trim().Equals(""))
+            int comment_id = 0;
+            if (!comment.Trim().Equals(""))
             {
-                string comment = tbComment.Text;
+                //string comment = tbComment.Text;
                 comment_id = (int)db.addComment(comment);
                 //Dodavanje na komentar u baza
                 //Zemanje na indeks od baza za komentarot
             }
+            int user_id = 1;
 
-            int user_id = int.Parse(Session["user_id"].ToString());
+            //da se smeni so dolnata linija koga ke se raboti Login
+            //int user_id = int.Parse(HttpContext.Current.Session["user_id"].ToString());
+
+
             //Funkcija za dodavanje u baza so parametrite od pogore
 
             //Ako e wishlist, dodavanje u tabela za wishlist kreiranata transakcija
             if (comment_id != 0)
             {
-                db.addTransaction(category_id, user_id, comment_id, price, datum, name, wishlist);
+                db.addTransaction(category_id, user_id, comment_id, amount, date, name, wishlist);
             }
             else
             {
-                db.addTransactionBezKomentar(category_id, user_id, price, datum, name, wishlist);
+                db.addTransactionBezKomentar(category_id, user_id, amount, date, name, wishlist);
             }
-            */
         }
 
         protected void btnAddExpenditure_Click(object sender, ImageClickEventArgs e)
         {
-            dodadiTransakcija(2);
+            //dodadiTransakcija(2);
         }
 
         protected void btnAddIncome_Click(object sender, ImageClickEventArgs e)
         {
-            dodadiTransakcija(1);
+            //dodadiTransakcija(1);
         }
 
         protected void btnAddWish_Click(object sender, ImageClickEventArgs e)
         {
-            dodadiTransakcija(3);
+           // dodadiTransakcija(3);
         }
     }
 }
