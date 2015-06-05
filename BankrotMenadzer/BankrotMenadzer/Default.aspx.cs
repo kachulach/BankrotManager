@@ -1,4 +1,5 @@
-﻿using BankrotMenadzer;
+﻿using BankrotManager;
+using BankrotManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,11 +20,19 @@ namespace BankrotManager
 
     public partial class Default : System.Web.UI.Page
     {
-
+        Database db;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            db = new Database();
+            var cats = db.getAllCategories();
 
+            var categories = db.getAllCategories().Tables[0].Rows;
+            foreach (var row in categories)
+            {
+                Console.WriteLine(row);
+            }
+            this.repeater_categories.DataSource = categories;
         }
 
 
@@ -36,11 +45,16 @@ namespace BankrotManager
         /// <param name="category"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public static string AJAX_AddTransaction(string type, string name, string amount, string category, string comment)
         {
             //DB query to add transaction and return new daily transaction state
             return string.Format("{0}, {1}, {2}, {3}, {4}", type, name, amount, category, comment);
+        }
+
+        private Transaction ValidateAndAdd(TransactionType type, string name, int amount, int category_id, string comment)
+        {
+            return null;
         }
 
         [WebMethod]
@@ -54,7 +68,6 @@ namespace BankrotManager
 
         private void dodadiTransakcija(int type)
         {
-
 
             ///* Ova  nadolu seto e tocno no e za verzijata pred dodavanje na bootstrap :)
             Database db = new Database();

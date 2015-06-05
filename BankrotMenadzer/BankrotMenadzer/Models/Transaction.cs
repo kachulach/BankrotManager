@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 
-namespace BankrotMenadzer.Models
+namespace BankrotManager.Models
 {
     public class Transaction
     {
@@ -47,6 +48,19 @@ namespace BankrotMenadzer.Models
         public Transaction(DataRow tableRow)
         {
             //Create Transaction object from table row
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{");
+            sb.Append(string.Format("{0}: '{1}'", "name", Name));
+            sb.Append(string.Format("{0}: '{1}'", "amount", Amount));
+            sb.Append(string.Format("{0}: '{1}'", "comment", Comment));
+            sb.Append(string.Format("{0}: '{1}'", "type", Type));
+            sb.Append(string.Format("{0}: '{1}'", "date", Date.ToShortDateString()));
+            sb.Append("}");
+            return sb.ToString();
         }
 
     }

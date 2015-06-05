@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BankrotMenadzer {
+namespace BankrotManager {
     
     
     public partial class Login {

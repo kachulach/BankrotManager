@@ -7,16 +7,41 @@ namespace BankrotManager
 {
     public class User
     {
-        public int user_id {set; get;}
-        public String username {set; get; }
-        public String password { set; get; }
-        public String name { set; get; }
+        public int user_id
+        {
+            set;
+            get;
+        }
+        public String username
+        {
+            set;
+            get;
+        }
+        public String password
+        {
+            set;
+            get;
+        }
+        public String name
+        {
+            set;
+            get;
+        }
 
-        public float funds { set; get; }
-        public String email { set; get; }
-       
+        public float funds
+        {
+            set;
+            get;
+        }
+        public String email
+        {
+            set;
+            get;
+        }
+
         public User()
-        {}
+        {
+        }
 
         public string getName()
         {

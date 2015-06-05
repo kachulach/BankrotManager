@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CrvenKrst {
+namespace BankrotManager {
     
     
     public partial class Master1 {

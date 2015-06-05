@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="BankrotManager.Default" %>
 
 
-
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentplaceHolder1" runat="server">
     <script src="Scripts/bm_chart.js"></script>
     <script src="Scripts/TransactionsAPI.js"></script>
@@ -91,9 +90,11 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Groceries</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Bills</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Luxuries</a></li>
+                                <asp:Repeater ID="repeater_categories" runat="server">
+                                    <ItemTemplate>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a></li>
+                                    </ItemTemplate>
+                                </asp:Repeater>
                             </ul>
                         </div>
                     </div>
@@ -113,16 +114,16 @@
                 <div class="col-md-2">
                     <!-- Transactions -->
                     <!-- Income -->
-                    <button class="btn btn-success btn-block" id="transaction-add"><span class="glyphicon glyphicon-plus"></span>  Add income</button>
+                    <button class="btn btn-success btn-block" id="transaction-add"><span class="glyphicon glyphicon-plus"></span>Add income</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-danger btn-block"><span class="glyphicon glyphicon-minus"></span>  Add expenditure</button>
+                    <button class="btn btn-danger btn-block"><span class="glyphicon glyphicon-minus"></span>Add expenditure</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-primary btn-block"><span class="glyphicon glyphicon-piggy-bank"></span>  Add to wishlist</button>
+                    <button class="btn btn-primary btn-block"><span class="glyphicon glyphicon-piggy-bank"></span>Add to wishlist</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-default btn-block"><span class="glyphicon glyphicon-remove"></span>  Clear form</button>
+                    <button class="btn btn-default btn-block"><span class="glyphicon glyphicon-remove"></span>Clear form</button>
                 </div>
                 <div class="col-md-1">
                 </div>
@@ -145,7 +146,6 @@
             </div>
         </div>
         <div class="col-md-1">
-
         </div>
         <div class="col-md-6">
             <div id="pie-chart-monthly">

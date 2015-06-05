@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Configuration;
 using System.Data;
-namespace BankrotMenadzer
+namespace BankrotManager
 {
     public class Database
     {
@@ -404,6 +404,30 @@ namespace BankrotMenadzer
             }
 
             return b;
+        }
+
+        //DataSet ili List<Transaction> od current logged user
+        public DataSet getFromToTransactions(DateTime from, DateTime to)
+        {
+            //TODO
+            return null;
+        }
+
+        public string currentLoggedUser()
+        {
+            //TODO
+            return null;
+        }
+
+        //Returns category_id from category name
+        public int categoryID(string categoryName)
+        {
+            return -1;
+        }
+
+        public int currentFunds()
+        {
+            return 0;
         }
 
     }
