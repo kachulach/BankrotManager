@@ -3,6 +3,7 @@ using BankrotManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -25,16 +26,18 @@ namespace BankrotManager
         protected void Page_Load(object sender, EventArgs e)
         {
             database = new Database();
-            var cats = database.getAllCategories();
+            var cats = database.getAllCategories().Tables[0].Rows;
 
-            var categories = database.getAllCategories().Tables[0].Rows;
-            foreach (var row in categories)
+            List<Category> categories = new List<Category>();
+            foreach (DataRow cat in cats)
             {
-                Console.WriteLine(row);
+                categories.Add(new Category(int.Parse(cat["category_id"].ToString().Trim()), cat["name"].ToString()));
             }
+            //var categories = new List<String>(new String[] {"Hi", "Hello"}); // database.getAllCategories().Tables[0].Rows;
+            
             this.repeater_categories.DataSource = categories;
+            this.repeater_categories.DataBind();
         }
-
 
         /// <summary>
         /// AJAX Call with data from the website.

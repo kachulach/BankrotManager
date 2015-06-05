@@ -9,7 +9,11 @@ namespace BankrotManager.Models
 {
     public class Transaction
     {
-
+        public int ID
+        {
+            get;
+            set;
+        }
         public string Name
         {
             get;

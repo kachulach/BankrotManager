@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Configuration;
 using System.Data;
+using BankrotManager.Models;
 namespace BankrotManager
 {
     public class Database
@@ -131,6 +132,7 @@ namespace BankrotManager
             }
             return result;
         }
+
         public string addNewCategory(string name)
         {
             string result = "Ok";
@@ -160,6 +162,7 @@ namespace BankrotManager
             return result;
         }
 
+        //TODO List<Category>
         public DataSet getAllCategories()
         {
             MySqlConnection con = getConnection();
@@ -185,6 +188,19 @@ namespace BankrotManager
             {
                 con.Close();
             }
+
+            /*
+            List<Category> categories = new List<Category>();
+            foreach (DataRow cat in cats)
+            {
+                categories.Add(new Category(int.Parse(cat["category_id"].ToString()), cat["name"].ToString()));
+            }
+            return categories;
+             * 
+             * Ja vaka za testiranje konvertirav data
+            */
+
+
         }
 
         public long addComment(string komentar)
@@ -331,7 +347,7 @@ namespace BankrotManager
             }
         }
 
-
+        
         public DataTable getIncomes(int user_id)
         {
             MySqlConnection con = getConnection();
@@ -359,6 +375,7 @@ namespace BankrotManager
                 con.Close();
             }
         }
+
         public string buyItemFromWishlist(int transaction_id)
         {
             MySqlConnection con = getConnection();
@@ -386,6 +403,8 @@ namespace BankrotManager
             }
             return result;
         }
+
+        //Ova moze bool da e
         public string testConnection()
         {
             MySqlConnection con = getConnection();
@@ -406,16 +425,16 @@ namespace BankrotManager
             return b;
         }
 
-        //DataSet ili List<Transaction> od current logged user
-        public DataSet getFromToTransactions(DateTime from, DateTime to)
+        public List<Transaction> getFromToTransactions(DateTime from, DateTime to)
         {
             //TODO
             return null;
         }
 
-        public string currentLoggedUser()
+        public User currentLoggedUser()
         {
             //TODO
+            //NOTE Ova moze vo sesija da se pamti?
             return null;
         }
 
@@ -425,6 +444,7 @@ namespace BankrotManager
             return -1;
         }
 
+        //Current user funds
         public int currentFunds()
         {
             return 0;
