@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="MacedonianRedCrossYouth.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="BankrotManager.Default" %>
 
 
 
@@ -7,6 +7,7 @@
     <script src="Scripts/TransactionsAPI.js"></script>
     <script src="Scripts/randomColor.js"></script>
     <script src="Scripts/Chart.min.js"></script>
+    <script src="Scripts/Page JS/home.js"></script>
     <div class="row">
         <div class="page-header">
             <h1>Welcome back! <small>You can see your current funds and you can create new transactions on this page. Also, you can check your weekly report and things in your wishlist that you can afford.</small></h1>
@@ -110,7 +111,9 @@
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"></span>  Add income</button>
+                    <!-- Transactions -->
+                    <!-- Income -->
+                    <button class="btn btn-success btn-block" id="transaction-add"><span class="glyphicon glyphicon-plus"></span>  Add income</button>
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-danger btn-block"><span class="glyphicon glyphicon-minus"></span>  Add expenditure</button>

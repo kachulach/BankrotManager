@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MacedonianRedCrossYouth {
+namespace BankrotManager {
     
     
     public partial class Default {

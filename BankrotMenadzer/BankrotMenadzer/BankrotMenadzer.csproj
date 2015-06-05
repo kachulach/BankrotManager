@@ -39,7 +39,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -65,6 +71,7 @@
     <Content Include="Content\image\Thumbs.db" />
     <Content Include="Content\image\wishlist.png" />
     <Content Include="Master1.Master" />
+    <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -117,6 +124,7 @@
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery.tabs.js" />
+    <Content Include="Scripts\Page JS\home.js" />
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\TransactionsAPI.js" />
     <Content Include="Web.config" />
@@ -125,6 +133,7 @@
     <Compile Include="Classes\User.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="DatabaseManagement.cs" />
+    <Compile Include="HelperTools.cs" />
     <Compile Include="Korisnik.aspx.cs">
       <DependentUpon>Korisnik.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -167,6 +176,7 @@
     <Compile Include="Master1.Master.designer.cs">
       <DependentUpon>Master1.Master</DependentUpon>
     </Compile>
+    <Compile Include="Models\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

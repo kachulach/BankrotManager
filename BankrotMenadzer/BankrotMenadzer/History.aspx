@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="History.aspx.cs" Inherits="MacedonianRedCrossYouth.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="History.aspx.cs" Inherits="BankrotManager.Default" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentplaceHolder1" runat="server">
     <div class="h1 text-center">History</div>

@@ -9,41 +9,56 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace MacedonianRedCrossYouth
+namespace BankrotManager
 {
+    public enum TransactionType {
+        Spending,
+        Saving,
+        Wishlist
+    }
+
     public partial class Default : System.Web.UI.Page
     {
-       protected void Page_Load(object sender, EventArgs e)
-        {
-           /*
-            if (!IsPostBack)
-            {
-                Database db = new Database();
-                DataSet ds = db.getAllCategories();
-                ddCategory.DataTextField = "name";
-                ddCategory.DataValueField = "category_id";
 
-                ddCategory.DataSource = ds;
-                ddCategory.DataBind();
-            }*/
-            // if (Session["user_id"] == null)
-            // {
-            //    Response.Redirect("Login.aspx");
-            // }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
+        /// <summary>
+        /// AJAX Call with data from the website.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <param name="amount"></param>
+        /// <param name="category"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public static string AJAX_AddTransaction(string type, string name, string amount, string category, string comment)
+        {
+            //DB query to add transaction and return new daily transaction state
+            return string.Format("{0}, {1}, {2}, {3}, {4}", type, name, amount, category, comment);
         }
 
         [WebMethod]
-        public static string AJAX_AddTransaction()
+        public static string AJAX_GetChartData(string from, string to)
         {
-            var random = new Random().Next(0, 2000);
-            return "{ \"label\": \"Test1\", \"value\": " + random + "}";
+            //DB query from-to transactions raw data
+            //return chart data
+            return from + to;
         }
+
 
         private void dodadiTransakcija(int type)
         {
-            /* Ova  nadolu seto e tocno no e za verzijata pred dodavanje na bootstrap :)
-            Database db = new Database();
 
+
+            ///* Ova  nadolu seto e tocno no e za verzijata pred dodavanje na bootstrap :)
+            Database db = new Database();
+            /*
             bool wishlist = type == 3;
             int price = Math.Abs(Convert.ToInt32(tbPrice.Text));
             if (type != 1)
