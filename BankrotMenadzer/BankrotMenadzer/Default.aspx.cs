@@ -24,26 +24,24 @@ namespace BankrotManager
     {
 
         Database database;
-
+        public static Dictionary<int, string> Categories;
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            Debug.WriteLine(sender);
-            Debug.WriteLine(Request.Url.AbsoluteUri);
-
-            if (!HelperTools.isInitialized)
+            if (repeater_categories != null)
             {
-                HelperTools.Initialize();
-            }
-            
-            this.repeater_categories.DataSource = HelperTools.Categories;
-            this.repeater_categories.DataBind();
+                Categories = new Dictionary<int, string> {{0, "Not categorized"}};
 
+                if (!HelperTools.isInitialized)
+                {
+                    HelperTools.Initialize();
+                }
+
+                repeater_categories.DataSource = HelperTools.Categories;
+                repeater_categories.DataBind();
+            }
             //Test user
             Session["user_id"] = 4;
-
         }
-
         /// <summary>
         /// AJAX Call with data from the website.
         /// </summary>
@@ -122,6 +120,18 @@ namespace BankrotManager
             var transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0, 0)), DateTime.Now);
             //return chart data
             return HelperTools.FormatToChartData(transactions);
+        }
+
+        [WebMethod]
+        public static string AJAX_TransactionData(string from, string to)
+        {
+            DateTime dateFrom = Convert.ToDateTime(from);
+            DateTime dateTo = Convert.ToDateTime(to);
+
+            Database db = new Database();
+            var transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), dateFrom, dateTo);
+            //return chart data
+            return HelperTools.FormatTransactions(transactions);
         }
 
         [WebMethod]

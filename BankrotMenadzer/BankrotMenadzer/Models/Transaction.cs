@@ -112,9 +112,9 @@ namespace BankrotManager.Models
             StringBuilder sb = new StringBuilder();
             sb.Append("{");
             sb.Append(string.Format("\"{0}\": \"{1}\", ", "name", Name));
-            sb.Append(string.Format("\"{0}\": \"{1}\", ", "amount", Amount));
-            sb.Append(string.Format("\"{0}\": \"{1}\", ", "comment", Comment_ID));
-            sb.Append(string.Format("\"{0}\": \"{1}\", ", "type", Type));
+            sb.Append(string.Format("\"{0}\": {1}, ", "amount", Amount));
+            sb.Append(string.Format("\"{0}\": {1}, ", "comment", Comment_ID));
+            sb.Append(string.Format("\"{0}\": {1}, ", "type", Type));
             sb.Append(string.Format("\"{0}\": \"{1}\", ", "category", Category.Name));
             sb.Append(string.Format("\"{0}\": \"{1}\"", "date", Date.ToShortDateString()));
             sb.Append("}");

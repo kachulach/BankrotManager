@@ -11,5 +11,23 @@ namespace BankrotManager {
     
     
     public partial class History {
+        
+        /// <summary>
+        /// repeater_stats control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeater_stats;
+        
+        /// <summary>
+        /// repeater_rawdata control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeater_rawdata;
     }
 }

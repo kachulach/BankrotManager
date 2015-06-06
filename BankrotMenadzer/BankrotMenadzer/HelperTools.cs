@@ -33,15 +33,44 @@ namespace BankrotManager
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Returns JSON Formatted array of transactions
+        /// </summary>
+        /// <param name="transactions">List of transactions</param>
+        /// <returns>JSON Data</returns>
+        public static string FormatTransactions(List<Transaction> transactions)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            for (int i = 0; i < transactions.Count; i++)
+            {
+                var t = transactions[i];
+                if (i != transactions.Count - 1)
+                {
+                    sb.Append(t);
+                    sb.Append(", \n");
+                }
+                else
+                {
+                    sb.Append(t.ChartData());
+                }
+            }
+            sb.Append("]");
+            return sb.ToString();
+        }
+
         public static void Initialize()
         {
-            Categories = new Dictionary<int, string>();
-            Categories.Add(0, "Not categorized");
-            Database db = new Database();
-            var cat = db.getAllCategories();
-            foreach (var c in cat)
+            if (Categories == null)
             {
-                Categories.Add(c.ID, c.Name);
+                Categories = new Dictionary<int, string>();
+                Categories.Add(0, "Not categorized");
+                Database db = new Database();
+                var cat = db.getAllCategories();
+                foreach (var c in cat)
+                {
+                    Categories.Add(c.ID, c.Name);
+                }
             }
             isInitialized = true;
         }

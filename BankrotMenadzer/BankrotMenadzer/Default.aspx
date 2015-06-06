@@ -130,6 +130,10 @@
                 <div class="col-md-1">
                 </div>
             </div>
+            <!-- TODO Stylize this! -->
+            <div class="row text-center">
+                <span id="message-success" class="text-center hidden">Message about transaction here</span>
+            </div>
         </form>
     </div>
     <hr />

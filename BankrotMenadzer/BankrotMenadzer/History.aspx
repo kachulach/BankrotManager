@@ -1,7 +1,18 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="History.aspx.cs" Inherits="BankrotManager.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="History.aspx.cs" Inherits="BankrotManager.History" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentplaceHolder1" runat="server">
+    
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/2.9.0/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker-bs3.css" />
+    <script src="Scripts/Page JS/history.js"></script>
+
     <div class="h1 text-center">History</div>
+    <div class="row">
+        <div id="calendar-picker" class="selectbox">
+            <button class="btn btn-success btn-block" id="button-select-date"><span class="glyphicon glyphicon-calendar"></span>Select date</button>
+		</div>
+    </div>
     <div class="row">
         <div class="">
             <div class="panel panel-info">
@@ -20,48 +31,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="active">
-                                    <td>/index.html</td>
-                                    <td>1265</td>
-                                    <td>32.3%</td>
-                                    <td>$321.33</td>
-                                </tr>
-                                <tr class="success">
-                                    <td>/about.html</td>
-                                    <td>261</td>
-                                    <td>33.3%</td>
-                                    <td>$234.12</td>
-                                </tr>
-                                <tr class="warning">
-                                    <td>/sales.html</td>
-                                    <td>665</td>
-                                    <td>21.3%</td>
-                                    <td>$16.34</td>
-                                </tr>
-                                <tr class="danger">
-                                    <td>/blog.html</td>
-                                    <td>9516</td>
-                                    <td>89.3%</td>
-                                    <td>$1644.43</td>
-                                </tr>
-                                <tr>
-                                    <td>/404.html</td>
-                                    <td>23</td>
-                                    <td>34.3%</td>
-                                    <td>$23.52</td>
-                                </tr>
-                                <tr>
-                                    <td>/services.html</td>
-                                    <td>421</td>
-                                    <td>60.3%</td>
-                                    <td>$724.32</td>
-                                </tr>
-                                <tr>
-                                    <td>/blog/post.html</td>
-                                    <td>1233</td>
-                                    <td>93.2%</td>
-                                    <td>$126.34</td>
-                                </tr>
+                            <asp:Repeater runat="server" ID="repeater_stats">
+                                <ItemTemplate>
+                                    <tr class="<%# Container.ItemIndex % 2 == 0 ? "success" : "warning" %>">
+                                        <td><%# DataBinder.Eval(Container.DataItem, "Category") %></td>
+                                        <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
+                                        <td><%# DataBinder.Eval(Container.DataItem, "Transactions") %></td>
+                                        <td><%# DataBinder.Eval(Container.DataItem, "Percent") %></td>
+                                    </tr>
+                                </ItemTemplate>
+                            </asp:Repeater>
                             </tbody>
                         </table>
                     </div>
@@ -124,48 +103,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="active">
-                                <td>/index.html</td>
-                                <td>1265</td>
-                                <td>32.3%</td>
-                                <td>$321.33</td>
-                            </tr>
-                            <tr class="success">
-                                <td>/about.html</td>
-                                <td>261</td>
-                                <td>33.3%</td>
-                                <td>$234.12</td>
-                            </tr>
-                            <tr class="warning">
-                                <td>/sales.html</td>
-                                <td>665</td>
-                                <td>21.3%</td>
-                                <td>$16.34</td>
-                            </tr>
-                            <tr class="danger">
-                                <td>/blog.html</td>
-                                <td>9516</td>
-                                <td>89.3%</td>
-                                <td>$1644.43</td>
-                            </tr>
-                            <tr>
-                                <td>/404.html</td>
-                                <td>23</td>
-                                <td>34.3%</td>
-                                <td>$23.52</td>
-                            </tr>
-                            <tr>
-                                <td>/services.html</td>
-                                <td>421</td>
-                                <td>60.3%</td>
-                                <td>$724.32</td>
-                            </tr>
-                            <tr>
-                                <td>/blog/post.html</td>
-                                <td>1233</td>
-                                <td>93.2%</td>
-                                <td>$126.34</td>
-                            </tr>
+                        <asp:Repeater runat="server" id="repeater_rawdata">
+                            <ItemTemplate>
+                                    <tr class="<%# Container.ItemIndex % 2 == 0 ? "success" : "warning" %>">
+                                        <td><%# DataBinder.Eval(Container.DataItem, "Name") %></td>
+                                        <td><%# DataBinder.Eval(Container.DataItem, "Category.Name") %></td>
+                                        <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
+                                        <td><%# DataBinder.Eval(Container.DataItem, "Date") %></td>
+                                    </tr>
+                                </ItemTemplate>
+                        </asp:Repeater>
                         </tbody>
                     </table>
                 </div>

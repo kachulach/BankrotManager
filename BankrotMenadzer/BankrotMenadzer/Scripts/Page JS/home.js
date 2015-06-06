@@ -9,17 +9,20 @@ $(document).ready(function () {
     fields.amount = $("#amount");
     fields.category = $("#category");
     fields.comment = $("#comment");
+    fields.success = $("#message-success");
 
     $("#transaction-add").on('click', function (event) {
         if (!$(this).hasClass('disabled')) {
             post_transaction(event, 1);
+            clearData();
         }
     });
 
 
-    $("#transaction-remove").on('click', function (event) {
-        if (!$(this).hasClass('disabled')) {
+    $("#transaction-remove").on("click", function (event) {
+        if (!$(this).hasClass("disabled")) {
             post_transaction(event, 2);
+            clearData();
         }
     });
 
@@ -27,6 +30,7 @@ $(document).ready(function () {
     $("#transaction-wishlist").on('click', function (event) {
         if (!$(this).hasClass('disabled')) {
             post_transaction(event, 3);
+            clearData();
         }
     });
 
@@ -40,48 +44,21 @@ $(document).ready(function () {
     });
 
     $("#transaction-clear-form").on('click', function (event) {
-        fields.name.val("");
-        fields.amount.val("");
-        fields.category.html("Choose category <span class=\"caret\"></span>");
-        fields.category.val("0");
-        fields.comment.val("");
+        clearData();
         event.preventDefault();
     });
 
     initializeData();
 
-    var testData = [
-
-        {
-            category: 'Groceries',
-            cost: 500
-        },
-        {
-            category: 'Bills',
-            cost: 1200
-        }, {
-            category: 'Luxuries',
-            cost: 200
-        },
-    ];
-
-    var testData2 = [
-
-        {
-            category: 'Pool stuff',
-            cost: 2133
-        },
-        {
-            category: 'Torrents',
-            cost: 45334
-        }, {
-            category: 'Hard Disk C',
-            cost: 10054
-        },
-    ];
-
-
 });
+
+function clearData() {
+    fields.name.val("");
+    fields.amount.val("");
+    fields.category.html("Choose category <span class=\"caret\"></span>");
+    fields.category.val("0");
+    fields.comment.val("");
+}
 
 function initializeData() {
 
@@ -110,7 +87,7 @@ function initializeDataSuccess(data) {
 function post_transaction(event, type) {
 
     event.preventDefault();
-
+    waitingSuccess();
     switch (type) {
         case '1': console.log('add'); break;
         case '2': console.log('remove'); break;
@@ -162,5 +139,44 @@ function post_transaction(event, type) {
         //jsonObj = JSON.parse(response.d);
         //chart1.addTransaction(jsonObj);
         //Maybe loading indicator?
+        showSuccess();
+    }
+}
+
+//Success/Error messages
+
+function waitingSuccess() {
+    if (fields.success.hasClass('hidden')) {
+        fields.success.removeClass('hidden');
+    }
+
+    fields.success.text("Adding transaction...");
+}
+
+function showSuccess() {
+    if (fields.success.hasClass('hidden')) {
+        fields.success.removeClass('hidden');
+    }
+
+    fields.success.text("Success!");
+    setTimeout(function () {
+        hideSuccess();
+    }, 3000);
+}
+
+function showError() {
+    if (fields.success.hasClass('hidden')) {
+        fields.success.removeClass('hidden');
+    }
+
+    fields.success.text("Error while adding in database!");
+    setTimeout(function () {
+        hideSuccess();
+    }, 3000);
+}
+
+function hideSuccess() {
+    if (!fields.success.hasClass('hidden')) {
+        fields.success.addClass('hidden');
     }
 }
