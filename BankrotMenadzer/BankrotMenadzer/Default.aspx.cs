@@ -27,21 +27,21 @@ namespace BankrotManager
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            Debug.WriteLine(sender);
+            Debug.WriteLine(Request.Url.AbsoluteUri);
+
             if (!HelperTools.isInitialized)
             {
                 HelperTools.Initialize();
             }
-
+            
+            this.repeater_categories.DataSource = HelperTools.Categories;
+            this.repeater_categories.DataBind();
 
             //Test user
             Session["user_id"] = 4;
 
-        }
-
-        protected override void OnPreRender(EventArgs e)
-        {
-            //this.repeater_categories.DataSource = HelperTools.Categories;
-            //this.repeater_categories.DataBind();
         }
 
         /// <summary>

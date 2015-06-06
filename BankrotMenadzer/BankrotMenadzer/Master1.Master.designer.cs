@@ -22,33 +22,6 @@ namespace BankrotManager {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl liHome;
         
         /// <summary>
-        /// liHistory control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liHistory;
-        
-        /// <summary>
-        /// liWishlist control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liWishlist;
-        
-        /// <summary>
-        /// liKorisnik control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liKorisnik;
-        
-        /// <summary>
         /// lblUser control.
         /// </summary>
         /// <remarks>
