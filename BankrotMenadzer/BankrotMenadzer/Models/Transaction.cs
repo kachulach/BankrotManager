@@ -9,14 +9,6 @@ namespace BankrotManager.Models
 {
     public class Transaction
     {
-        private int tran_id;
-        private int cat_id;
-        private int price;
-        private DateTime datum;
-        private int kom_id;
-        private int user_id;
-        private bool wish;
-        private bool bo;
 
         public int ID
         {
@@ -37,10 +29,16 @@ namespace BankrotManager.Models
         public int Amount
         {
             get;
-          set;
+            set;
         }
 
-        public string Comment
+        public int Comment_ID
+        {
+            get;
+            set;
+        }
+
+        public int User_ID
         {
             get;
             set;
@@ -57,7 +55,19 @@ namespace BankrotManager.Models
             get;
             set;
         }
-        
+
+        public bool IsWishlist
+        {
+            get;
+            set;
+        }
+
+        public bool IsBought
+        {
+            get;
+            set;
+        }
+
         public Transaction()
         {
 
@@ -72,28 +82,41 @@ namespace BankrotManager.Models
         {
             // TODO: Complete member initialization
             // izvadi sto treba od site ovie podatoci 
-            this.tran_id = tran_id;
+            this.ID = tran_id;
             this.Name = name;
-            this.cat_id = cat_id;
-            this.price = price;
-            this.datum = datum;
-            this.kom_id = kom_id;
-            this.user_id = user_id;
-            this.wish = wish;
-            this.bo = bo;
+            this.Category = new Category(cat_id, HelperTools.Categories[cat_id]);
+            this.Amount = price;
+            this.Date = datum;
+            this.Comment_ID = kom_id;
+            this.User_ID = user_id;
+            this.IsWishlist = wish;
+            this.IsBought = bo;
+        }
 
+        /// <summary>
+        /// Convert transaction to smaller chart data with label and value
+        /// </summary>
+        /// <returns>JSON Text data</returns>
+        public string ChartData()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{");
+            sb.Append(string.Format("\"{0}\": {1}, ", "value", Amount));
+            sb.Append(string.Format("\"{0}\": \"{1}\" ", "label", Category.Name));
+            sb.Append("}");
+            return sb.ToString();
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{");
-            sb.Append(string.Format("\"{0}\": \"{1}\", ",  "name", Name));
-            sb.Append(string.Format("\"{0}\": \"{1}\", ",  "amount", Amount));
-            sb.Append(string.Format("\"{0}\": \"{1}\", ",  "comment", Comment));
-            sb.Append(string.Format("\"{0}\": \"{1}\", ",  "type", Type));
+            sb.Append(string.Format("\"{0}\": \"{1}\", ", "name", Name));
+            sb.Append(string.Format("\"{0}\": \"{1}\", ", "amount", Amount));
+            sb.Append(string.Format("\"{0}\": \"{1}\", ", "comment", Comment_ID));
+            sb.Append(string.Format("\"{0}\": \"{1}\", ", "type", Type));
             sb.Append(string.Format("\"{0}\": \"{1}\", ", "category", Category.Name));
-            sb.Append(string.Format("\"{0}\": \"{1}\"",     "date", Date.ToShortDateString()));
+            sb.Append(string.Format("\"{0}\": \"{1}\"", "date", Date.ToShortDateString()));
             sb.Append("}");
             return sb.ToString();
         }

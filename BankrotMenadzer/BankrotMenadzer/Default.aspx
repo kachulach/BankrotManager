@@ -94,7 +94,7 @@
                             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                                 <asp:Repeater ID="repeater_categories" runat="server">
                                     <ItemTemplate>
--                                       <li role="presentation"><a role="menuitem" data-id="<%# DataBinder.Eval(Container.DataItem, "ID") %>" href="#"><%# DataBinder.Eval(Container.DataItem, "Name") %></a></li>
+-                                       <li role="presentation"><a role="menuitem" data-id="<%# DataBinder.Eval(Container.DataItem, "Key") %>" href="#"><%# DataBinder.Eval(Container.DataItem, "Value") %></a></li>
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </ul>

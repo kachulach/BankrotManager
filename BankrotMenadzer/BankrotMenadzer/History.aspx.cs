@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace BankrotManager
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class History : System.Web.UI.Page
     {
         public static DateTime firstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
         public static DateTime lastDay = firstDay.AddMonths(1).AddDays(-1);

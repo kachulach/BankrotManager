@@ -1,7 +1,9 @@
-﻿using System;
+﻿using BankrotManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace BankrotManager
@@ -10,10 +12,25 @@ namespace BankrotManager
     {
         public static bool isInitialized = false;
         public static Dictionary<int, string> Categories;
-        public static string FormatToChartData(DataSet transactionRawData)
+        public static string FormatToChartData(List<Transaction> transactions)
         {
-            //transactionRawData.Tables[0].Rows[0].AcceptChanges
-            return "";
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            for (int i = 0; i < transactions.Count; i++) 
+            {
+                var t = transactions[i];
+                if (i != transactions.Count - 1)
+                {
+                    sb.Append(t.ChartData());
+                    sb.Append(", \n");
+                }
+                else
+                {
+                    sb.Append(t.ChartData());
+                }
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
 
         public static void Initialize()
@@ -22,9 +39,9 @@ namespace BankrotManager
             Categories.Add(0, "Not categorized");
             Database db = new Database();
             var cat = db.getAllCategories();
-            foreach (DataRow c in cat.Tables[0].Rows)
+            foreach (var c in cat)
             {
-                Categories.Add(int.Parse(c["category_id"].ToString()), (string)c["name"]);
+                Categories.Add(c.ID, c.Name);
             }
             isInitialized = true;
         }

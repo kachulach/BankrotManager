@@ -10,7 +10,7 @@
 namespace BankrotManager {
     
     
-    public partial class Default {
+    public partial class Korisnik {
         
         /// <summary>
         /// userForm control.

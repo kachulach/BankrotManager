@@ -446,7 +446,8 @@ namespace BankrotManager
 
                 string query = "SELECT * FROM transaction " +
                                 "WHERE user_id=" + user_id +
-                                " AND datum BETWEEN " + from +" AND " + to;
+                                " AND datum BETWEEN '" + from.ToString("yyyy-MM-dd HH:mm:ss")
+                                + "' AND '" + to.ToString("yyyy-MM-dd HH:mm:ss") + "'";
 
                 MySqlCommand command = new MySqlCommand(query, con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
@@ -462,7 +463,11 @@ namespace BankrotManager
                     int cat_id = Convert.ToInt32(row["category_id"]);
                     int price = Convert.ToInt32(row["price"]);
                     DateTime datum = (DateTime) row["datum"];
-                    int kom_id = Convert.ToInt32(row["comment_id"]);
+                    int kom_id = -1;
+                    if (row["comment_id"].GetType() != typeof(DBNull))
+                    {
+                        kom_id = Convert.ToInt32(row["comment_id"]);
+                    }
                     bool wish = (bool)row["wishlist"];
                     bool bo = (bool)row["bought"];
 

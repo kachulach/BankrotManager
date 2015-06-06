@@ -22,23 +22,26 @@ namespace BankrotManager
 
     public partial class Default : System.Web.UI.Page
     {
+
         Database database;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            database = new Database();
-            var cats = database.getAllCategories().Tables[0].Rows;
-
-            List<Category> categories = new List<Category>();
-            foreach (DataRow cat in cats)
+            if (!HelperTools.isInitialized)
             {
-                categories.Add(new Category(int.Parse(cat["category_id"].ToString().Trim()), cat["name"].ToString()));
+                HelperTools.Initialize();
             }
 
-            this.repeater_categories.DataSource = categories;
-            this.repeater_categories.DataBind();
 
+            //Test user
             Session["user_id"] = 4;
+
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            //this.repeater_categories.DataSource = HelperTools.Categories;
+            //this.repeater_categories.DataBind();
         }
 
         /// <summary>
@@ -88,11 +91,11 @@ namespace BankrotManager
         {
             Database db = new Database();
             var user = int.Parse(HttpContext.Current.Session["user_id"].ToString());
-
+            int comment_id = -1;
             if (!string.IsNullOrWhiteSpace(comment))
             {
 
-                var comment_id = db.addComment(comment);
+                comment_id = (int)db.addComment(comment);
                 db.addTransaction(category_id, user, (int)comment_id, amount, DateTime.Now, name, type == TransactionType.Wishlist);
             }
             else
@@ -106,18 +109,28 @@ namespace BankrotManager
                 Date = DateTime.Now,
                 Type = (int)type,
                 Amount = amount,
-                Comment = comment,
+                Comment_ID = comment_id,
                 ID = -1,
                 Name = name
             };
         }
 
         [WebMethod]
+        public static string AJAX_DailyStats()
+        {
+            Database db = new Database();
+            var transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0, 0)), DateTime.Now);
+            //return chart data
+            return HelperTools.FormatToChartData(transactions);
+        }
+
+        [WebMethod]
         public static string AJAX_GetChartData(string from, string to)
         {
-            //DB query from-to transactions raw data
+            Database db = new Database();
+            var transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0, 0)), DateTime.Now);
             //return chart data
-            return from + to;
+            return HelperTools.FormatToChartData(transactions);
         }
 
 

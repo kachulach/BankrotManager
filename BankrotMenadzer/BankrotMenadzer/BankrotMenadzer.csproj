@@ -72,6 +72,10 @@
     <Content Include="Content\image\wishlist.png" />
     <Content Include="Master1.Master" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\bm_chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\randomColor.js" />
+    <Content Include="Scripts\validator.js" />
     <Content Include="Wishlist.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -121,7 +125,6 @@
     <Content Include="Logout.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\bm_chart.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery.tabs.js" />

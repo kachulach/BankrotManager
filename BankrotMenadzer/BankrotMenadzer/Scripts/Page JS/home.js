@@ -48,6 +48,8 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
+    initializeData();
+
     var testData = [
 
         {
@@ -78,15 +80,42 @@ $(document).ready(function () {
         },
     ];
 
-    chart1 = new BMChart("#chart_weekSpendings", "pie", testData, null, true);
-    chart2 = new BMChart("#chart_monthlySpendings", "pie", testData2, null, true);
-
 
 });
+
+function initializeData() {
+
+    $.ajax({
+        type: 'POST',
+        url: 'Default.aspx/AJAX_DailyStats',
+        data: '{}',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: initializeDataSuccess,
+        failure: function (response) {
+            alert(response.d);
+        }
+    });
+
+}
+
+function initializeDataSuccess(data) {
+
+    console.log(data);
+    chart1 = new BMChart("#chart_weekSpendings", "pie", data.d, null, true);
+    //chart2 = new BMChart("#chart_monthlySpendings", "pie", testData2, null, true);
+
+}
 
 function post_transaction(event, type) {
 
     event.preventDefault();
+
+    switch (type) {
+        case '1': console.log('add'); break;
+        case '2': console.log('remove'); break;
+        case '3': console.log('wishlist'); break;
+    }
 
     name = $("#name").val();
     amount = parseInt($("#amount").val());

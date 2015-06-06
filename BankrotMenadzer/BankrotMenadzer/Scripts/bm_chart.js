@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    
+    console.log("BMChart imported!");
 });
 
 
@@ -46,11 +46,9 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
 
     this.init = function() {
         this.context = $(canvasID)[0].getContext('2d');
-        this.chartData = this.convertDataToChartData(this.data);
         this.parentElement = $(canvasID).parent();
-        //console.log("Chart to: " + canvasID);
         switch (chartType) {
-            case 'pie': this.chart = new Chart(this.context).Pie(this.chartData, this.options); break;
+            case 'pie': this.chart = new Chart(this.context).Pie({}, this.options); break;
                 //TODO Implement Bar charts
             case 'bar': this.chart = new Chart(this.context).Bar("test"); break;
         }
@@ -59,11 +57,47 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
         if (this.hasLegend) {
             this.parentElement.find(".chart-legend").html(this.generateLegend(this.chartData));
         }
+        this.addData(this.data);
     }
 
     this.addData = function (jsonData) {
         
-        var obj = JSON.parse(jsonData);
+        var objs = JSON.parse(jsonData);
+
+        
+        //TODO check 
+        for (j = 0; j < objs.length; j++) {
+            var obj = objs[j];
+            var index = -1;
+            //Find if there already exist a label with that name and get the index
+            for (i = 0; i < this.chart.segments.length; i++) {
+                if (this.chart.segments[i].label == obj.label) {
+                    index = i;
+                    break;
+                }
+            }
+            //If there is a label
+            if (index != -1) {
+                var newValue = this.chart.segments[i].value + obj.value;
+                this.chart.segments[index].value = newValue;
+            }
+                //If there isn't a label, create one
+            else {
+                var objColor = getColor(this.chart.segments.length);
+                obj.color = objColor;
+                this.chart.addData(obj);
+            }
+            this.refresh(obj);
+        }
+    }
+
+
+    this.addTransaction = function (jsonObj) {
+        
+        var obj = {
+            label: jsonObj.category,
+            value: parseInt(jsonObj.amount)
+        }
         var index = -1;
 
         //Find if there already exist a label with that name and get the index
@@ -76,38 +110,10 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
 
         //If there is a label
         if (index != -1) {
-            console.log(this.chart.segments);
-            console.log(this.chart.segments[index].value);
             var newValue = this.chart.segments[i].value + obj.value;
             this.chart.segments[index].value = newValue;
         }
-        //If there isn't a label, create one
-        else {
-            var objColor = getColor(this.chart.segments.length);
-            obj.color = objColor;
-            this.chart.addData(obj);
-        }
-        this.refresh(obj);
-    }
-
-
-    this.addTransaction = function (jsonObj) {
-        
-        var obj = {
-            label: jsonObj.category,
-            value: parseInt(jsonObj.amount)
-        }
-
-        var index = -1;
-        for (i = 0; i < this.chart.segments.length; i++) {
-            if (this.chart.segments[i].label == obj.label) {
-                index = i;
-                break;
-            }
-        }
-        if (index != -1) {
-            this.chart.segments[index].value = obj.value;
-        }
+            //If there isn't a label, create one
         else {
             var objColor = getColor(this.chart.segments.length);
             obj.color = objColor;
@@ -118,7 +124,7 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
 
     this.refresh = function(data) {
         this.chart.update();
-
+        //console.log("test11");
         this.data = this.convertChartDataToRaw();
         this.chartData = this.convertDataToChartData(this.data);
 
@@ -129,6 +135,8 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
 
     this.convertDataToChartData = function(data) {
 
+        //var objs = JSON.parse(data);
+        //console.log(objs);
         var chartArray = Array();
 
         //There might be a better choice for predefined colors
@@ -151,6 +159,7 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
 
     this.convertChartDataToRaw = function () {
 
+
         var data = this.chart.segments;
         var arr = Array();
         for (i = 0; i < data.length; i++) {
@@ -162,6 +171,8 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
 
 
     this.generateLegend = function(data) {
+
+        if (data == null) return;
 
         var total = 0;
         for (var i = 0, n = data.length; i < n; ++i) {
