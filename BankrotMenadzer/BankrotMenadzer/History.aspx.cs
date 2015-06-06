@@ -11,8 +11,8 @@ namespace BankrotManager
 {
     public partial class History : System.Web.UI.Page
     {
-        public static DateTime firstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-        public static DateTime lastDay = firstDay.AddMonths(1).AddDays(-1);
+        //public static DateTime firstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        //public static DateTime lastDay = firstDay.AddMonths(1).AddDays(-1);
         //protected void Page_Load(object sender, EventArgs e)
        // {
             /* if (Session["user_id"] == null)

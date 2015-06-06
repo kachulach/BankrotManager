@@ -24,14 +24,22 @@ namespace BankrotManager
     {
 
         Database database;
-
+        public static Dictionary<int, string> Categories;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!HelperTools.isInitialized)
+            Categories = new Dictionary<int, string>();
+            Categories.Add(0, "Not categorized");
+            Database db = new Database();
+            var cat = db.getAllCategories();
+            foreach (var c in cat)
             {
-                HelperTools.Initialize();
+                Categories.Add(c.ID, c.Name);
             }
-
+            if (this.repeater_categories != null)
+            {
+                this.repeater_categories.DataSource = Categories;
+                this.repeater_categories.DataBind();
+            }
 
             //Test user
             Session["user_id"] = 4;
@@ -40,8 +48,8 @@ namespace BankrotManager
 
         protected override void OnPreRender(EventArgs e)
         {
-            //this.repeater_categories.DataSource = HelperTools.Categories;
-            //this.repeater_categories.DataBind();
+           //this.repeater_categories.DataSource = HelperTools.Categories;
+           //this.repeater_categories.DataBind();
         }
 
         /// <summary>
