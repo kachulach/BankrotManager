@@ -30,8 +30,8 @@ namespace BankrotManager.Models
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{");
-            sb.Append(string.Format("{0}: '{1}'", "name", Name));
-            sb.Append(string.Format("{0}: '{1}'", "id", ID));
+            sb.Append(string.Format("'{0}': '{1}', ", "name", Name));
+            sb.Append(string.Format("'{0}': '{1}'", "id", ID));
             sb.Append("}");
             return sb.ToString();
         }

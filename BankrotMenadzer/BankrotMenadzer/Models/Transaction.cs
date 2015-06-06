@@ -17,31 +17,36 @@ namespace BankrotManager.Models
         public string Name
         {
             get;
-            private set;
+            set;
         }
 
         public int Type
         {
             get;
-            private set;
+            set;
         }
-
         public int Amount
         {
             get;
-            private set;
+          set;
         }
 
         public string Comment
         {
             get;
-            private set;
+            set;
         }
 
         public DateTime Date
         {
             get;
-            private set;
+            set;
+        }
+
+        public Category Category
+        {
+            get;
+            set;
         }
         
         public Transaction()
@@ -58,11 +63,12 @@ namespace BankrotManager.Models
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("{");
-            sb.Append(string.Format("{0}: '{1}'", "name", Name));
-            sb.Append(string.Format("{0}: '{1}'", "amount", Amount));
-            sb.Append(string.Format("{0}: '{1}'", "comment", Comment));
-            sb.Append(string.Format("{0}: '{1}'", "type", Type));
-            sb.Append(string.Format("{0}: '{1}'", "date", Date.ToShortDateString()));
+            sb.Append(string.Format("\"{0}\": \"{1}\", ",  "name", Name));
+            sb.Append(string.Format("\"{0}\": \"{1}\", ",  "amount", Amount));
+            sb.Append(string.Format("\"{0}\": \"{1}\", ",  "comment", Comment));
+            sb.Append(string.Format("\"{0}\": \"{1}\", ",  "type", Type));
+            sb.Append(string.Format("\"{0}\": \"{1}\", ", "category", Category.Name));
+            sb.Append(string.Format("\"{0}\": \"{1}\"",     "date", Date.ToShortDateString()));
             sb.Append("}");
             return sb.ToString();
         }

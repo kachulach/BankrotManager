@@ -13,10 +13,11 @@ using System.Web.UI.WebControls;
 
 namespace BankrotManager
 {
-    public enum TransactionType {
-        Spending,
-        Saving,
-        Wishlist
+    public enum TransactionType
+    {
+        Spending = 1,
+        Saving = 2,
+        Wishlist = 3,
     }
 
     public partial class Default : System.Web.UI.Page
@@ -33,31 +34,82 @@ namespace BankrotManager
             {
                 categories.Add(new Category(int.Parse(cat["category_id"].ToString().Trim()), cat["name"].ToString()));
             }
-            //var categories = new List<String>(new String[] {"Hi", "Hello"}); // database.getAllCategories().Tables[0].Rows;
-            
+
             this.repeater_categories.DataSource = categories;
             this.repeater_categories.DataBind();
+
+            Session["user_id"] = 4;
         }
 
         /// <summary>
         /// AJAX Call with data from the website.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="name"></param>
-        /// <param name="amount"></param>
-        /// <param name="category"></param>
-        /// <param name="comment"></param>
-        /// <returns></returns>
         [WebMethod(EnableSession = true)]
         public static string AJAX_AddTransaction(string type, string name, string amount, string category, string comment)
         {
             //DB query to add transaction and return new daily transaction state
-            return string.Format("{0}, {1}, {2}, {3}, {4}", type, name, amount, category, comment);
+            TransactionType tType = TransactionType.Spending;
+            switch (type)
+            {
+                case "1":
+                    tType = TransactionType.Saving;
+                    break;
+                case "2":
+                    tType = TransactionType.Spending;
+                    break;
+                case "3":
+                    tType = TransactionType.Wishlist;
+                    break;
+            }
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return "{ }";
+            }
+
+            int amt = -1;
+            if (string.IsNullOrWhiteSpace(amount))
+            {
+                return "{ }";
+            }
+            amt = int.Parse(amount);
+
+            if (string.IsNullOrWhiteSpace(category))
+            {
+                return "{ }";
+            }
+            var cat = int.Parse(category);
+
+
+            return ValidateAndAdd(tType, name, amt, cat, comment).ToString();
         }
 
-        private Transaction ValidateAndAdd(TransactionType type, string name, int amount, int category_id, string comment)
+        private static Transaction ValidateAndAdd(TransactionType type, string name, int amount, int category_id, string comment)
         {
-            return null;
+            Database db = new Database();
+            var user = int.Parse(HttpContext.Current.Session["user_id"].ToString());
+
+            if (!string.IsNullOrWhiteSpace(comment))
+            {
+
+                var comment_id = db.addComment(comment);
+                db.addTransaction(category_id, user, (int)comment_id, amount, DateTime.Now, name, type == TransactionType.Wishlist);
+            }
+            else
+            {
+                db.addTransactionBezKomentar(category_id, user, amount, DateTime.Now, name, type == TransactionType.Wishlist);
+            }
+
+            return new Transaction()
+            {
+                Category = new Category(category_id, HelperTools.Categories[category_id]),
+                Date = DateTime.Now,
+                Type = (int)type,
+                Amount = amount,
+                Comment = comment,
+                ID = -1,
+                Name = name
+            };
         }
 
         [WebMethod]
@@ -81,13 +133,13 @@ namespace BankrotManager
             int type_t = 1;
             if (type == TransactionType.Spending)
             {
-                type_t=2;
+                type_t = 2;
             }
             if (type == TransactionType.Wishlist)
             {
                 type_t = 3;
             }
-            
+
             bool wishlist = type_t == 3;
             if (type_t != 1)
             {
@@ -96,7 +148,7 @@ namespace BankrotManager
 
             //Da se komentira ovaa linija koga ke se dodade pole za datum vo dizajnot
             date = DateTime.Now;
- 
+
             // dali e ne prazen komentarot
             int comment_id = 0;
             if (!comment.Trim().Equals(""))
@@ -137,7 +189,7 @@ namespace BankrotManager
 
         protected void btnAddWish_Click(object sender, ImageClickEventArgs e)
         {
-           // dodadiTransakcija(3);
+            // dodadiTransakcija(3);
         }
     }
 }

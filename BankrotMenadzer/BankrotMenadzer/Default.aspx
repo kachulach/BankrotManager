@@ -6,6 +6,7 @@
     <script src="Scripts/TransactionsAPI.js"></script>
     <script src="Scripts/randomColor.js"></script>
     <script src="Scripts/Chart.min.js"></script>
+    <script src="Scripts/validator.js"></script>
     <script src="Scripts/Page JS/home.js"></script>
     <div class="row">
         <div class="page-header">
@@ -55,14 +56,15 @@
         </div>
     </div>
     <div class="row">
-        <form role="form">
+        <form role="form" data-toggle="validator">
             <div class="row">
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name">Transaction name:</label>
-                        <input class="form-control" id="name" placeholder="Transaction name">
+                        <input class="form-control" id="name" placeholder="Transaction name" required>    
+                        <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -70,7 +72,7 @@
                         <label for="amount">Amount:</label>
                         <div class="input-group">
                             <div class="input-group-addon">MKD</div>
-                            <input type="text" class="form-control" id="amount" placeholder="Amount">
+                            <input type="number" min="0" class="form-control" id="amount" placeholder="Amount" required>
                             <div class="input-group-addon">.00</div>
                         </div>
                     </div>
@@ -92,7 +94,7 @@
                             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                                 <asp:Repeater ID="repeater_categories" runat="server">
                                     <ItemTemplate>
--                                       <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%# DataBinder.Eval(Container.DataItem, "Name") %></a></li>
+-                                       <li role="presentation"><a role="menuitem" data-id="<%# DataBinder.Eval(Container.DataItem, "ID") %>" href="#"><%# DataBinder.Eval(Container.DataItem, "Name") %></a></li>
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </ul>
@@ -114,16 +116,16 @@
                 <div class="col-md-2">
                     <!-- Transactions -->
                     <!-- Income -->
-                    <button class="btn btn-success btn-block" id="transaction-add"><span class="glyphicon glyphicon-plus"></span>Add income</button>
+                    <button class="btn btn-success btn-block" id="transaction-add" type="submit"><span class="glyphicon glyphicon-plus"></span>Add income</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-danger btn-block"><span class="glyphicon glyphicon-minus"></span>Add expenditure</button>
+                    <button class="btn btn-danger btn-block" id="transaction-remove" type="submit"><span class="glyphicon glyphicon-minus"></span>Add expenditure</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-primary btn-block"><span class="glyphicon glyphicon-piggy-bank"></span>Add to wishlist</button>
+                    <button class="btn btn-primary btn-block" id="transaction-wishlist" type="submit"><span class="glyphicon glyphicon-piggy-bank"></span>Add to wishlist</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-default btn-block"><span class="glyphicon glyphicon-remove"></span>Clear form</button>
+                    <button class="btn btn-default btn-block" id="transaction-clear-form"><span class="glyphicon glyphicon-remove"></span>Clear form</button>
                 </div>
                 <div class="col-md-1">
                 </div>

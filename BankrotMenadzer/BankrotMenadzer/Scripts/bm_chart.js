@@ -65,6 +65,40 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
         
         var obj = JSON.parse(jsonData);
         var index = -1;
+
+        //Find if there already exist a label with that name and get the index
+        for (i = 0; i < this.chart.segments.length; i++) {
+            if (this.chart.segments[i].label == obj.label) {
+                index = i;
+                break;
+            }
+        }
+
+        //If there is a label
+        if (index != -1) {
+            console.log(this.chart.segments);
+            console.log(this.chart.segments[index].value);
+            var newValue = this.chart.segments[i].value + obj.value;
+            this.chart.segments[index].value = newValue;
+        }
+        //If there isn't a label, create one
+        else {
+            var objColor = getColor(this.chart.segments.length);
+            obj.color = objColor;
+            this.chart.addData(obj);
+        }
+        this.refresh(obj);
+    }
+
+
+    this.addTransaction = function (jsonObj) {
+        
+        var obj = {
+            label: jsonObj.category,
+            value: parseInt(jsonObj.amount)
+        }
+
+        var index = -1;
         for (i = 0; i < this.chart.segments.length; i++) {
             if (this.chart.segments[i].label == obj.label) {
                 index = i;
@@ -130,7 +164,6 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
     this.generateLegend = function(data) {
 
         var total = 0;
-
         for (var i = 0, n = data.length; i < n; ++i) {
             total += data[i].value;
         }
@@ -155,12 +188,12 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
 //This should be themable
 function getColor(number) {
 
-    var colors =   ["#232323",
-                    "#bbbbbb",
-                    "#ff3333",
-                    "#ffaaaa",
-                    "#eeeeee",
-                    "#bebebe"
+    var colors = ["#98f4cd",
+                    "#bcee68",
+                    "#00adff",
+                    "#f56560",
+                    "#02659a",
+                    "#FFCCFF"
     ];
     return colors[number];
 

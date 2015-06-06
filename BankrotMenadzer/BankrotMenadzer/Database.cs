@@ -16,6 +16,8 @@ namespace BankrotManager
             return new MySqlConnection(connectionString);
         }
 
+
+        //Return Transaction instead of String
         public string addTransaction(int category_id, int user_id, int comment_id, int price, DateTime datum,
             string name, bool wishlist)
         {

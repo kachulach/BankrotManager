@@ -11,6 +11,11 @@ namespace BankrotManager
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!HelperTools.isInitialized)
+            {
+                HelperTools.Initialize();
+            }
+
             string path = HttpContext.Current.Request.Url.LocalPath;
              string[] parts = path.Split('/');
              path = parts[parts.Length - 1];
