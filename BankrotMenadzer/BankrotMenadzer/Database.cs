@@ -163,7 +163,7 @@ namespace BankrotManager
         }
 
         //TODO List<Category>
-        public DataSet getAllCategories()
+        public List<Category> getAllCategories()
         {
             MySqlConnection con = getConnection();
 
@@ -174,11 +174,20 @@ namespace BankrotManager
                 string query = "SELECT * FROM category";
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(query, con);
+                
                 DataSet ds = new DataSet();
 
                 adapter.Fill(ds);
 
-                return ds;
+                List<Category> categories = new List<Category>();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    int id = Convert.ToInt32(row["category_id"]);
+                    string name = row["name"] as String;
+                    
+                    categories.Add(new Category(id, name));
+                }
+                return categories;
             }
             catch (Exception e)
             {
@@ -199,7 +208,6 @@ namespace BankrotManager
              * 
              * Ja vaka za testiranje konvertirav data
             */
-
 
         }
 
@@ -405,17 +413,17 @@ namespace BankrotManager
         }
 
         //Ova moze bool da e
-        public string testConnection()
+        public bool testConnection()
         {
             MySqlConnection con = getConnection();
-            string b = "Ok";
+            bool b = true;
             try
             {
                 con.Open();
             }
             catch(Exception e)
             {
-                b = e.Message;
+                b = false;
             }
             finally
             {
@@ -425,29 +433,122 @@ namespace BankrotManager
             return b;
         }
 
-        public List<Transaction> getFromToTransactions(DateTime from, DateTime to)
+        public List<Transaction> getFromToTransactions(int user_id, DateTime from, DateTime to)
         {
             //TODO
-            return null;
+            MySqlConnection con = getConnection();
+
+            try
+            {
+                con.Open();
+
+                string query = "SELECT * FROM transaction " +
+                                "WHERE user_id=" + user_id +
+                                " AND datum BETWEEN " + from +" AND " + to;
+
+                MySqlCommand command = new MySqlCommand(query, con);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataSet ds = new DataSet();
+               
+                adapter.Fill(ds);
+
+                List<Transaction> transactions = new List<Transaction>();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    int tran_id = Convert.ToInt32(row["transaction_id"]);
+                    string name = row["name"] as String;
+                    int cat_id = Convert.ToInt32(row["category_id"]);
+                    int price = Convert.ToInt32(row["price"]);
+                    DateTime datum = (DateTime) row["datum"];
+                    int kom_id = Convert.ToInt32(row["comment_id"]);
+                    bool wish = (bool)row["wishlist"];
+                    bool bo = (bool)row["bought"];
+
+                    transactions.Add(new Transaction(tran_id, name, cat_id, price,datum, kom_id, user_id, wish, bo));
+                }
+                return transactions;
+                
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         public User currentLoggedUser()
         {
             //TODO
             //NOTE Ova moze vo sesija da se pamti?
+            // DEFINITIVNO vo sesija se cuva logiran user
             return null;
         }
 
         //Returns category_id from category name
         public int categoryID(string categoryName)
         {
-            return -1;
+            MySqlConnection con = getConnection();
+
+            try
+            {
+                con.Open();
+
+                string query = "SELECT category_id FROM category " +
+                                "WHERE name=" + categoryName;
+
+                MySqlCommand command = new MySqlCommand(query, con);
+                MySqlDataReader res = command.ExecuteReader();
+                while (res.Read())
+                {
+                    int id = res.GetInt32(0);
+                    return id;
+                }
+                
+                return -1;
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         //Current user funds
-        public int currentFunds()
+        public int currentFunds(int user_id)
         {
-            return 0;
+            MySqlConnection con = getConnection();
+
+            try
+            {
+                con.Open();
+
+                string query = "SELECT funds FROM user " +
+                                "WHERE user_id=" + user_id;
+
+                MySqlCommand command = new MySqlCommand(query, con);
+                MySqlDataReader res = command.ExecuteReader();
+                while (res.Read())
+                {
+                    int funds = res.GetInt32(0);
+                    return funds;
+                }
+
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
     }
