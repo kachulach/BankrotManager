@@ -65,38 +65,52 @@ function initializeData() {
     $.ajax({
         type: 'POST',
         url: 'Default.aspx/AJAX_DailyStats',
-        data: '{}',
+        data: '{ "type": 1 }',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: initializeDataSuccess,
+        success: initSavings,
         failure: function (response) {
-            alert(response.d);
+            showError(response.d);
+        }
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: 'Default.aspx/AJAX_DailyStats',
+        data: '{ "type": 2 }',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: initSpendings,
+        failure: function (response) {
+            showError(response.d);
         }
     });
 
 }
 
-function initializeDataSuccess(data) {
+function initSavings(data) {
 
-    console.log(data);
     chart1 = new BMChart("#chart_weekSpendings", "pie", data.d, null, true);
-    //chart2 = new BMChart("#chart_monthlySpendings", "pie", testData2, null, true);
 
+}
+
+function initSpendings(data) {
+    chart2 = new BMChart("#chart_monthlySpendings", "pie", data.d, null, true);
 }
 
 function post_transaction(event, type) {
 
     event.preventDefault();
     waitingSuccess();
-    switch (type) {
-        case '1': console.log('add'); break;
-        case '2': console.log('remove'); break;
-        case '3': console.log('wishlist'); break;
-    }
 
     name = $("#name").val();
     amount = parseInt($("#amount").val());
-    //TODO Fix this
+
+    intType = parseInt(type);
+    if (intType == 2) {
+        amount *= -1;
+    }
+
     category = $("#category").val();
     category_name = $("#category").text();
     comment = $("#comment").val();
@@ -128,18 +142,19 @@ function post_transaction(event, type) {
         data: '{type: "' + type + '", name: "' + name + '", amount: "' + amount + '", category: "' + category + '", comment: "' + comment + '"}',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: OnSuccess,
+        success: onSuccess,
         failure: function (response) {
-            alert(response.d);
+            showError(response.d);
         }
     });
 
     //Update chart instantly
-    function OnSuccess(response) {
+    function onSuccess(response) {
         //jsonObj = JSON.parse(response.d);
         //chart1.addTransaction(jsonObj);
         //Maybe loading indicator?
         showSuccess();
+        //console.log(response);
     }
 }
 
@@ -164,12 +179,12 @@ function showSuccess() {
     }, 3000);
 }
 
-function showError() {
+function showError(error) {
     if (fields.success.hasClass('hidden')) {
         fields.success.removeClass('hidden');
     }
 
-    fields.success.text("Error while adding in database!");
+    fields.success.text(error);
     setTimeout(function () {
         hideSuccess();
     }, 3000);

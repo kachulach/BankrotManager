@@ -64,7 +64,6 @@ namespace BankrotManager
             if (Categories == null)
             {
                 Categories = new Dictionary<int, string>();
-                Categories.Add(0, "Not categorized");
                 Database db = new Database();
                 var cat = db.getAllCategories();
                 foreach (var c in cat)

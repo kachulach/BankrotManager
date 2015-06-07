@@ -29,7 +29,7 @@ namespace BankrotManager
         {
             if (repeater_categories != null)
             {
-                Categories = new Dictionary<int, string> {{0, "Not categorized"}};
+                Categories = new Dictionary<int, string>();
 
                 if (!HelperTools.isInitialized)
                 {
@@ -114,26 +114,37 @@ namespace BankrotManager
         }
 
         [WebMethod]
-        public static string AJAX_DailyStats()
+        public static string AJAX_DailyStats(string type)
         {
             Database db = new Database();
-            var transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0, 0)), DateTime.Now);
+            List<Transaction> transactions = null;
+            switch (type)
+            {
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+            }
+            transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0, 0)), DateTime.Now, int.Parse(type));
             //return chart data
             return HelperTools.FormatToChartData(transactions);
         }
 
         [WebMethod]
-        public static string AJAX_TransactionData(string from, string to)
+        public static string AJAX_TransactionData(string from, string to, string type)
         {
             DateTime dateFrom = Convert.ToDateTime(from);
             DateTime dateTo = Convert.ToDateTime(to);
 
             Database db = new Database();
-            var transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), dateFrom, dateTo);
+            var transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), dateFrom, dateTo, int.Parse(type));
             //return chart data
             return HelperTools.FormatTransactions(transactions);
         }
 
+        /*
         [WebMethod]
         public static string AJAX_GetChartData(string from, string to)
         {
@@ -142,7 +153,7 @@ namespace BankrotManager
             //return chart data
             return HelperTools.FormatToChartData(transactions);
         }
-
+        */
 
         private static void dodadiTransakcija(TransactionType type, string name, int amount, int category_id, DateTime date, string comment)
         {

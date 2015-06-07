@@ -7,9 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MacedonianRedCrossYouth {
+namespace BankrotManager {
     
     
-    public partial class Default {
+    public partial class Wishlist {
     }
 }

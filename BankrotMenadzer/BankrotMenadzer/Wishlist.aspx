@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Wishlist.aspx.cs" Inherits="BankrotManager.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Wishlist.aspx.cs" Inherits="BankrotManager.Wishlist" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentplaceHolder1" runat="server">
     <div class="h1 text-center">Wishlist</div>

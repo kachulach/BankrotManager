@@ -435,7 +435,7 @@ namespace BankrotManager
             return b;
         }
 
-        public List<Transaction> getFromToTransactions(int user_id, DateTime from, DateTime to)
+        public List<Transaction> getFromToTransactions(int user_id, DateTime from, DateTime to, int type = 0)
         {
             //TODO
             MySqlConnection con = getConnection();
@@ -448,6 +448,21 @@ namespace BankrotManager
                                 "WHERE user_id=" + user_id +
                                 " AND datum BETWEEN '" + from.ToString("yyyy-MM-dd HH:mm:ss")
                                 + "' AND '" + to.ToString("yyyy-MM-dd HH:mm:ss") + "'";
+
+                switch (type)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        query += " AND price >= 0";
+                        break;
+                    case 2:
+                        query += " AND price <= 0";
+                        break;
+                    case 3:
+                        query += " AND wishlist = 1";
+                        break;
+                }
 
                 MySqlCommand command = new MySqlCommand(query, con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);

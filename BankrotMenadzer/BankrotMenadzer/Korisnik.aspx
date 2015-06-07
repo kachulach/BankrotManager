@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Korisnik.aspx.cs" Inherits="BankrotManager.Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Korisnik.aspx.cs" Inherits="BankrotManager.Korisnik" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentplaceHolder1" runat="server">
     <style>

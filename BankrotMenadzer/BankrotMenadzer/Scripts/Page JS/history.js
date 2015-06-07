@@ -1,11 +1,18 @@
 ﻿$(document).ready(function () {
-    var today = moment().format('DD-MM-YYYY');
-    var startMonth = moment().startOf('month').format("DD-MM-YYYY");
+    var today = moment().format('DD.MM.YYYY');
+
+    var from = getUrlParameter("start");
+    var to = getUrlParameter("end");
+    if (from == null || to == null) {
+        from = today;
+        to = today;
+    }
+
     $('#calendar-picker').daterangepicker(
     {
-        format: 'DD-MM-YYYY',
-        startDate: startMonth,
-        endDate: today,
+        format: 'DD.MM.YYYY',
+        startDate: from,
+        endDate: to,
         ranges: {
             'Today': [moment(), moment()],
             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -49,4 +56,16 @@ function changeData(from, to) {
     console.log(from);
     console.log(to);
     window.location.href = '?start=' + from + '&end=' + to;
+}
+
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+    return null;
 }

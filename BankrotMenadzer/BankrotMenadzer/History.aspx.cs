@@ -30,9 +30,9 @@ namespace BankrotManager
 
         }
 
-        void ShowData(DateTime from, DateTime to)
+        void ShowData(DateTime from, DateTime to, int type = 0)
         {
-            var transactions = db.getFromToTransactions(int.Parse(Session["user_id"].ToString()), from, to);
+            var transactions = db.getFromToTransactions(int.Parse(Session["user_id"].ToString()), from, to, type);
 
             this.repeater_stats.DataSource = CreateStatisticsFromTransactions(transactions);
             this.repeater_stats.DataBind();
