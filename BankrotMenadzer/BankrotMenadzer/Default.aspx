@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="h1 text-center" style="font-size: 72px"><b>15000</b><small> MKD</small></div>
+            <div id="funds" class="h1 text-center" style="font-size: 72px"><b>0</b><small> MKD</small></div>
         </div>
         <div class="col-md-6">
             <div class="table-responsive">

@@ -114,6 +114,15 @@ namespace BankrotManager
         }
 
         [WebMethod]
+        public static string AJAX_GetCurrentFunds()
+        {
+            Database db = new Database();
+            int user_id = (int) HttpContext.Current.Session["user_id"];
+            int curr_funds = db.currentFunds(user_id);
+            return curr_funds.ToString();
+        }
+
+        [WebMethod]
         public static string AJAX_DailyStats(string type)
         {
             Database db = new Database();
