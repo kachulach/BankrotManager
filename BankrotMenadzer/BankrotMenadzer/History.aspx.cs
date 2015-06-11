@@ -16,7 +16,10 @@ namespace BankrotManager
         protected override void OnLoad(EventArgs e)
         {
             //Get from login
-            Session["user_id"] = 4;
+            if (Session["user_id"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
 
             db = new Database();
             DateTime from = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0, 0));

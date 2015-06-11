@@ -19,24 +19,40 @@ namespace BankrotManager
 
         protected void btnNajaviSe_Click(object sender, EventArgs e)
         {
-            /*User u = DatabaseManagement.authenticateUser(tbUsername.Text, tbPassword.Text);
+            User u = Database.authenticateUser(tbUsername.Text, tbPassword.Text);
             if (u != null)
             {
-                Session["user_id"] = u.user_id;
-                Session["full_name"] = u.getFullName();
-                Session["organization_id"] = u.getOrganizationId();
+                Session["user_id"] = u.getUserId();
+                Session["full_name"] = u.getName();
+                Session["userInfo"] = u;
                 Response.Redirect("Default.aspx");
 
             }
             else
             {
                 lblError.Text = "Неуспешна најава. Обидете се повторно.";
-            }*/
+            }
         }
 
         protected void LoginView1_ViewChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void btn_Click(object sender, EventArgs e)
+        {
+            string name = tbNameReg.Text;
+            string username = tbUserNameReg.Text;
+            string password = tbPasswordReg.Text;
+            string email = tbEmailReg.Text;
+            Database db = new Database();
+            string result = db.addUser(username, password, name, email);
+            if ("OK" == db.addUser(username, password, name, email))
+            Response.Redirect("Login.aspx");
+            else
+            {
+                lblError.Text = "Неуспешна регистрација. Обидете се повторно.";
+            }
         }
     }
 }

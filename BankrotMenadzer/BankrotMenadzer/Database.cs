@@ -573,5 +573,53 @@ namespace BankrotManager
             }
         }
 
+
+        internal static User authenticateUser(string username, string password)
+        {
+            if(username=="kris" && password=="admin"){
+            User u = new User();
+            u.name = "Kristijan Milanov";
+            u.username = "kris";
+            u.user_id = 1;
+            return u;
+            }
+
+            //da se naprave funkcija za avtentikacija na korisnikot i da vrakja User so site parametri so gi ima za user
+            /*
+            SqlConnection konekcija = getConnection();
+            string sqlString = "SELECT * FROM Users WHERE username=@username AND password=@password AND is_active = 1";
+            SqlCommand komanda = new SqlCommand(sqlString, konekcija);
+            komanda.Parameters.AddWithValue("@username", username);
+            komanda.Parameters.AddWithValue("@password", password);
+
+            try
+            {
+                konekcija.Open();
+                SqlDataReader citac = komanda.ExecuteReader();
+                if (citac.Read())
+                {
+
+                    User u = new User();
+                    u.user_id = int.Parse(citac["user_id"].ToString());
+                    u.first_name = citac["first_name"].ToString();
+                    u.last_name = citac["last_name"].ToString();
+                    u.organization_id = int.Parse(citac["organization_id"].ToString());
+
+                    return u;
+                }
+                else
+                    return null;
+            }
+            catch (Exception err)
+            {
+                Console.Write(err.ToString());
+            }
+            finally
+            {
+                konekcija.Close();
+            }
+             */
+            return null;
+        }
     }
 }

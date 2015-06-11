@@ -33,7 +33,7 @@
                     <td>
                         <asp:TextBox ID="tbUsername" runat="server"></asp:TextBox>
                         <br />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="tbUsername" Display="Dynamic" ErrorMessage="Внесете корисничко име" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="tbUsername" Display="Dynamic" ErrorMessage="Внесете корисничко име" ForeColor="Red" ValidationGroup="group1"></asp:RequiredFieldValidator>
 
                     </td>
                 </tr>
@@ -44,12 +44,11 @@
 
                     <td>Лозинка:</td>
                 </tr>
-
                 <tr>
                     <td>
                         <asp:TextBox ID="tbPassword" runat="server" TextMode="Password"></asp:TextBox>
                         <br />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="tbPassword" Display="Dynamic" ErrorMessage="Внесете лозинка" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="tbPassword" Display="Dynamic" ErrorMessage="Внесете лозинка" ForeColor="Red" ValidationGroup="group1"></asp:RequiredFieldValidator>
 
                     </td>
                 </tr>
@@ -60,7 +59,67 @@
                 </tr>
                 <tr>
                     <td>
-                    <asp:Button ID="btnLogin" runat="server" OnClick="btnNajaviSe_Click" Text="Најави се" Width="160" />
+                    <asp:Button ID="btnLogin" runat="server" OnClick="btnNajaviSe_Click" Text="Најави се" Width="160" ValidationGroup="group1" />
+                        </td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Ime:</td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:TextBox ID="tbNameReg" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="tbNameReg" Display="Dynamic" ErrorMessage="Внесете го Вашето име" ForeColor="Red" ValidationGroup="group2"></asp:RequiredFieldValidator>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Korisnicko ime:</td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:TextBox ID="tbUserNameReg" runat="server"></asp:TextBox>
+                        <br />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="tbUserNameReg" Display="Dynamic" ErrorMessage="Внесете корисничко име" ForeColor="Red" ValidationGroup="group2"></asp:RequiredFieldValidator>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>Lozinka:</td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:TextBox ID="tbPasswordReg" runat="server" TextMode="Password"></asp:TextBox>
+                        <br />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="tbPasswordReg" Display="Dynamic" ErrorMessage="Внесете лозинка" ForeColor="Red" ValidationGroup="group2"></asp:RequiredFieldValidator>
+                    </td>
+                </tr>
+                 <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>E-mail:</td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:TextBox ID="tbEmailReg" runat="server" TextMode="Email"></asp:TextBox>
+                        <br />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="tbEmailReg" Display="Dynamic" ErrorMessage="Внесете е-маил" ForeColor="Red" ValidationGroup="group2"></asp:RequiredFieldValidator>
+                    </td>
+                </tr>
+                 <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>
+                    <asp:Button ID="btnRegistrirajSe" runat="server" OnClick="btn_Click" Text="Регистрирај се" Width="160" ValidationGroup="group2" />
                         </td>
                 </tr>
                 <tr>
