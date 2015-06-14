@@ -46,9 +46,14 @@ namespace BankrotManager
             string password = tbPasswordReg.Text;
             string email = tbEmailReg.Text;
             Database db = new Database();
-            string result = db.addUser(username, password, name, email);
-            if ("OK" == db.addUser(username, password, name, email))
-            Response.Redirect("Login.aspx");
+            User result = db.addUser(username, password, name, email);
+            if (result != null)
+            {
+                HttpContext.Current.Session["user_id"] = result.user_id;
+                HttpContext.Current.Session["full_name"] = result.name;
+                HttpContext.Current.Session["username"] = result.username;
+                Response.Redirect("~/Default.aspx");
+            }
             else
             {
                 lblError.Text = "Неуспешна регистрација. Обидете се повторно.";

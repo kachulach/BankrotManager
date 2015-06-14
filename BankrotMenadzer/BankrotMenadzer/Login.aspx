@@ -131,6 +131,9 @@
                 </div>
             </div>
         </div> 
+        <div>
+            <asp:Label runat="server" id="lblError"></asp:Label>
+        </div>
     </form>
 
     <div>

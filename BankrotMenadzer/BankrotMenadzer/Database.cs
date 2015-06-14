@@ -242,8 +242,9 @@ namespace BankrotManager
             return -1;
         }
 
-        public string addUser(string username, string password, string name, string email)
+        public User addUser(string username, string password, string name, string email)
         {
+            long returnId = -1;
             MySqlConnection con = getConnection();
             string result = "OK";
             try
@@ -260,8 +261,10 @@ namespace BankrotManager
                 command.Parameters.AddWithValue("@datum", DateTime.Now);
                 command.Parameters.AddWithValue("@e_mail", email);
                 command.Parameters.AddWithValue("@username", username);
+                
 
                 command.ExecuteNonQuery();
+                returnId = command.LastInsertedId;
             }
             catch (Exception e)
             {
@@ -271,7 +274,16 @@ namespace BankrotManager
             {
                 con.Close();
             }
-            return result;
+
+            return new User()
+            {
+                email = email,
+                funds =  0,
+                name = name,
+                password =  "xxx",
+                user_id =(int) returnId,
+                username = username
+            };
         }
         public DataTable getWishlist(int user_id)
         {
@@ -577,16 +589,8 @@ namespace BankrotManager
 
         internal static User authenticateUser(string username, string password)
         {
-            if(username=="kris" && password=="admin"){
-            User u = new User();
-            u.name = "Kristijan Milanov";
-            u.username = "kris";
-            u.user_id = 1;
-            return u;
-            }
-
             //da se naprave funkcija za avtentikacija na korisnikot i da vrakja User so site parametri so gi ima za user
-            /*
+            
             SqlConnection konekcija = getConnection();
             string sqlString = "SELECT * FROM Users WHERE username=@username AND password=@password AND is_active = 1";
             SqlCommand komanda = new SqlCommand(sqlString, konekcija);
@@ -619,7 +623,7 @@ namespace BankrotManager
             {
                 konekcija.Close();
             }
-             */
+            
             return null;
         }
     }
