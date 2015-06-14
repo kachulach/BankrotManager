@@ -27,7 +27,6 @@ namespace BankrotManager
                 to = Convert.ToDateTime(Request.QueryString["end"]);
             }
             ShowData(from, to);
-
         }
 
         void ShowData(DateTime from, DateTime to, int type = 0)
@@ -58,7 +57,7 @@ namespace BankrotManager
                     dict.Add(t.Category.Name, new Statistic());
                     dict[t.Category.Name].UpdateStat(t);
                 }
-                totalAmount += t.Amount;
+                totalAmount += Math.Abs(t.Amount);
             }
             foreach (var kv in dict)
             {

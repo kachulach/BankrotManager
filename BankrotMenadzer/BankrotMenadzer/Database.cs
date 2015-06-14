@@ -493,6 +493,7 @@ namespace BankrotManager
             }
             catch (Exception e)
             {
+                HttpContext.Current.Response.Write(e.Message);
                 return null;
             }
             finally
