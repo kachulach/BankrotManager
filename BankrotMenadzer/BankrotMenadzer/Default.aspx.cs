@@ -27,6 +27,10 @@ namespace BankrotManager
         public static Dictionary<int, string> Categories;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["user_id"] == null)
+            {
+                Response.Redirect("Login.aspx");
+            }
             if (repeater_categories != null)
             {
                 Categories = new Dictionary<int, string>();
@@ -39,8 +43,6 @@ namespace BankrotManager
                 repeater_categories.DataSource = HelperTools.Categories;
                 repeater_categories.DataBind();
             }
-            //Test user
-            Session["user_id"] = 4;
         }
         /// <summary>
         /// AJAX Call with data from the website.
@@ -111,6 +113,15 @@ namespace BankrotManager
                 ID = -1,
                 Name = name
             };
+        }
+
+        [WebMethod]
+        public static string AJAX_GetCurrentFunds()
+        {
+            Database db = new Database();
+            int user_id = (int) HttpContext.Current.Session["user_id"];
+            int curr_funds = db.currentFunds(user_id);
+            return curr_funds.ToString();
         }
 
         [WebMethod]

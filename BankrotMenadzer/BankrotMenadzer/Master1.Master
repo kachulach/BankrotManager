@@ -29,13 +29,13 @@
                         Overview
                     </a>
                 </li>
-                <li id="liHistory">
+                <li id="liHistory" runat="server">
                     <a href="History.aspx" id="History">
                         <span class="glyphicon glyphicon-stats"></span> 
                         Stats
                     </a>
                 </li>
-                <li id="liWishlist">
+                <li id="liWishlist" runat="server">
                     <a href="Wishlist.aspx" id="Wishlist">
                         <span class="glyphicon glyphicon-piggy-bank"></span> 
                         Wishlist
@@ -43,7 +43,7 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right" style="padding-right: 30px;">
-                <li id="liKorisnik" style="border-right-color: red;">
+                <li id="liKorisnik" style="border-right-color: red;" runat="server">
                     <a href="Korisnik.aspx" id="Korisnik"> 
                         <span class="glyphicon glyphicon-user"></span>                       
                         <asp:Label ID="lblUser" runat="server" Text=""></asp:Label>                        

@@ -1,6 +1,6 @@
 ﻿var chart1;
 var chart2;
-
+var currentFunds;
 var fields = {};
 
 $(document).ready(function () {
@@ -62,6 +62,8 @@ function clearData() {
 
 function initializeData() {
 
+    updateCurrentFunds();
+
     $.ajax({
         type: 'POST',
         url: 'Default.aspx/AJAX_DailyStats',
@@ -86,6 +88,32 @@ function initializeData() {
         }
     });
 
+}
+
+function updateCurrentFunds() {
+
+
+    $.ajax({
+        type: 'POST',
+        url: 'Default.aspx/AJAX_GetCurrentFunds',
+        data: '{}',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: successUpdateCurrentFunds,
+        failure: function (response) {
+            showError(response.d);
+        }
+    });
+}
+
+function successUpdateCurrentFunds(response) {
+    currentFunds = parseInt(response.d);
+    changeCurrentFunds(currentFunds);
+}
+
+function changeCurrentFunds(funds) {
+    console.log(funds);
+    $("#funds").html("<b>" + funds + "</b><small> MKD</small>");
 }
 
 function initSavings(data) {
@@ -150,9 +178,11 @@ function post_transaction(event, type) {
 
     //Update chart instantly
     function onSuccess(response) {
-        //jsonObj = JSON.parse(response.d);
+        jsonObj = JSON.parse(response.d);
         //chart1.addTransaction(jsonObj);
         //Maybe loading indicator?
+        //jsonObj
+        changeCurrentFunds(currentFunds + jsonObj.amount);
         showSuccess();
         //console.log(response);
     }

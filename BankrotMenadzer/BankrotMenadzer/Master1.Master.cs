@@ -26,42 +26,24 @@ namespace BankrotManager
                     liHome.Attributes.Add("class", "active");
                     break;
                 case "Korisnik.aspx":
-                    //liKorisnik.Attributes.Add("class", "active");
+                    liKorisnik.Attributes.Add("class", "active");
                     break;
                 case "History.aspx":
-                    //liHistory.Attributes.Add("class", "active");
+                    liHistory.Attributes.Add("class", "active");
+                    break;
+                case "Wishlist.aspx":
+                    liWishlist.Attributes.Add("class", "active");
                     break;
                 default:
                     liHome.Attributes.Add("class", "active");
                     break;
             }
             lblUser.Text = "Корисник";
-            /*
+            
                 if (Session["user_id"] != null)
                 {
                     lblUser.Text = Session["full_name"].ToString();
-                    int user_id = int.Parse(Session["user_id"].ToString());
-                    //display menu items
-                    if (!DatabaseManagement.canViewMenuItems(user_id))
-                    {
-                        liVolonteri.Visible = false;
-                        liClenovi.Visible = false;
-                        liUlogi.Visible = false;
-                    }
-
-                    if (DatabaseManagement.isUserAdmin(user_id))
-                    {
-                        liUlogi.Visible = true;
-                    }
-                    else
-                    {
-                        liUlogi.Visible = false;
-                    }
                 }
-                else
-                {
-                }
-    */
         }
 
     }
