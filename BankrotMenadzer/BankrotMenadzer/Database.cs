@@ -590,25 +590,37 @@ namespace BankrotManager
         internal static User authenticateUser(string username, string password)
         {
             //da se naprave funkcija za avtentikacija na korisnikot i da vrakja User so site parametri so gi ima za user
+            Database db = new Database();
+            MySqlConnection konekcija = db.getConnection();
+
+            string sqlString = "SELECT * FROM user WHERE username=@username " +
+                "AND password=AES_ENCRYPT(@password, SHA1(@username))";// AND is_active = 1";
+            // neznam so e is_active zatoa e iskomentirano :D nema takvo nesto vo bazata zacuvano :)
             
-            SqlConnection konekcija = getConnection();
-            string sqlString = "SELECT * FROM Users WHERE username=@username AND password=@password AND is_active = 1";
-            SqlCommand komanda = new SqlCommand(sqlString, konekcija);
+            MySqlCommand komanda = new MySqlCommand(sqlString, konekcija);
             komanda.Parameters.AddWithValue("@username", username);
             komanda.Parameters.AddWithValue("@password", password);
 
             try
             {
                 konekcija.Open();
-                SqlDataReader citac = komanda.ExecuteReader();
+                MySqlDataReader citac = komanda.ExecuteReader();
                 if (citac.Read())
                 {
-
+                    // mozi da se zemi i datumot koga e kreiran userot...
+                    // dokolku se dodade pole vo User klasata za datum
+                    // u.datum = citac["datum"]
                     User u = new User();
-                    u.user_id = int.Parse(citac["user_id"].ToString());
-                    u.first_name = citac["first_name"].ToString();
-                    u.last_name = citac["last_name"].ToString();
-                    u.organization_id = int.Parse(citac["organization_id"].ToString());
+                    u.username = citac["username"] as string;
+                    u.name = citac["name"] as string;
+                    u.user_id = int.Parse(citac["user_id"].ToString());;
+                    u.funds = int.Parse(citac["funds"].ToString());;
+                    u.email = citac["e_mail"] as string;
+                    
+                    // u.user_id = int.Parse(citac["user_id"].ToString());
+                    // u.name = citac["first_name"].ToString();
+                    // u.last_name = citac["last_name"].ToString();
+                    // u.organization_id = int.Parse(citac["organization_id"].ToString());
 
                     return u;
                 }
