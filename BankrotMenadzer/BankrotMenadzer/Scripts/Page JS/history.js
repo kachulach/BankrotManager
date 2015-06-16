@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+
     var today = moment().format('DD.MM.YYYY');
 
     var from = getUrlParameter("start");
@@ -29,8 +30,28 @@
         //alert("A new date range was chosen: " +  + ' to ' + end.format('DD-MM-YYYY'));
     });
 
+
+    $('.removeTransaction').on("click", function (event) {
+        //$.ajax({
+        //    type: 'POST',
+        //    url: 'Default.aspx/AJAX_TransactionData',
+        //    data: '{from: "' + formattedNow + '", to: "' + formattedNow + '"}',
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json",
+        //    success: setData,
+        //    failure: function (response) {
+        //        alert(response.d);
+        //    }
+        });
+    });
+
+
+   
+
     //initializeData();
 });
+
+
 
 
 function initializeData() {
@@ -68,4 +89,8 @@ function getUrlParameter(sParam) {
         }
     }
     return null;
+}
+
+function removeTransaction() {
+    console.log("REMOVE TRANSACTION");
 }

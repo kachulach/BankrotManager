@@ -26,8 +26,9 @@
                                 <tr>
                                     <th class="text-center">Category</th>
                                     <th class="text-center">Cost</th>
-                                    <th class="text-center">Numbor of transactions</th>
+                                    <th class="text-center">Number of transactions</th>
                                     <th class="text-center">Total %</th>
+                                    <th class="text-center">Remove</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,6 +39,7 @@
                                         <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
                                         <td><%# DataBinder.Eval(Container.DataItem, "Transactions") %></td>
                                         <td><%# DataBinder.Eval(Container.DataItem, "Percent") %></td>
+                                        <td class="removeTransaction"><i class="glyphicon glyphicon-remove"></i></td>
                                     </tr>
                                 </ItemTemplate>
                             </asp:Repeater>
