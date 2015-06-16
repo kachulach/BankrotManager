@@ -32,6 +32,8 @@
 
 
     $('.removeTransaction').on("click", function (event) {
+        var id = $(this).data("id");
+        console.log(id);
         //$.ajax({
         //    type: 'POST',
         //    url: 'Default.aspx/AJAX_TransactionData',
@@ -42,7 +44,7 @@
         //    failure: function (response) {
         //        alert(response.d);
         //    }
-        });
+        //});
     });
 
 
