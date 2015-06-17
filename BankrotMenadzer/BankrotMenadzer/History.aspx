@@ -7,6 +7,13 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker-bs3.css" />
     <script src="Scripts/Page JS/history.js"></script>
 
+    <style>
+        .removeTransaction:hover
+        {
+            color:red;
+        }
+    </style>
+
     <div class="h1 text-center">History</div>
     <div class="row">
         <div id="calendar-picker" class="selectbox">
