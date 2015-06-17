@@ -936,11 +936,98 @@ namespace BankrotManager
             
             return null;
         }
-
-        internal void removeTransaction(int transaction_id)
+        public int getCommentId(int transaction_id)
         {
-            //da se izbrise transakcijata so toa id
-            throw new NotImplementedException();
+            MySqlConnection con = getConnection();
+
+            try
+            {
+                con.Open();
+
+                string query = "SELECT comment_id FROM transaction " +
+                                "WHERE transaction_id=" + transaction_id;
+
+                MySqlCommand command = new MySqlCommand(query, con);
+                MySqlDataReader res = command.ExecuteReader();
+                while (res.Read())
+                {
+                    int com = res.GetInt32(0);
+                    
+                    if (com != null)
+                        return com;
+                }
+
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        internal bool removeTransaction(int transaction_id)
+        {
+            MySqlConnection con = getConnection();
+            bool result = true;
+            try
+            {
+                int c_id = getCommentId(transaction_id);
+                con.Open();
+                
+                string queryUpdateUser = "DELETE FROM transaction " +
+                                         "WHERE transaction_id=" + transaction_id;
+
+                MySqlCommand command = new MySqlCommand(queryUpdateUser, con);
+                command.Prepare();
+
+                command.ExecuteNonQuery();
+                removeComment(c_id);
+            }
+            catch (Exception e)
+            {
+                result = false;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+
+            return result;
+        }
+
+
+        private bool removeComment(int comment_id)
+        {
+            MySqlConnection con = getConnection();
+            bool result = true;
+            try
+            {
+                con.Open();
+
+                string queryUpdateUser = "DELETE FROM komentar " +
+                                         "WHERE comment_id=" + comment_id;
+
+                MySqlCommand command = new MySqlCommand(queryUpdateUser, con);
+                command.Prepare();
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                result = false;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
         }
     }
+
+
+
 }
