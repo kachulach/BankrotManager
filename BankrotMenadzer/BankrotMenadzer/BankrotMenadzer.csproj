@@ -85,7 +85,6 @@
     <Content Include="Scripts\Page JS\history.js" />
     <Content Include="Scripts\randomColor.js" />
     <Content Include="Scripts\validator.js" />
-    <Content Include="test.aspx" />
     <Content Include="Wishlist.aspx" />
     <Content Include="Scripts\bootstrap-daterangepicker-master\bower.json" />
     <Content Include="Scripts\bootstrap-daterangepicker-master\package.json" />
@@ -197,13 +196,6 @@
     <Compile Include="Models\Statistic.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="test.aspx.cs">
-      <DependentUpon>test.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="test.aspx.designer.cs">
-      <DependentUpon>test.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Wishlist.aspx.cs">
       <DependentUpon>Wishlist.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

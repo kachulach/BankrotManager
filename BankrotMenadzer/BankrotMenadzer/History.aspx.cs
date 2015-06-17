@@ -70,5 +70,11 @@ namespace BankrotManager
             return stats;
         }
 
+        //brisenje na daden element od transakcii
+        void removeTransaction(int transaction_id)
+        {
+            Database db = new Database();
+            db.removeTransaction(transaction_id);
+        }
     }
 }

@@ -33,21 +33,20 @@
                 </div>
                 <div class="navbar-collapse collapse navbar-responsive-collapse">
                     <ul class="nav navbar-nav navbar-right" style="padding-right: 30px;">
-                        <div class="navbar-form navbar-left" role="search">
+                        <div class="navbar-form navbar-left" role="search" aria-orientation="vertical">
                             <div class="form-group">
                                 <asp:TextBox CssClass="form-control" placeholder="Username" ID="tbUsername" runat="server"></asp:TextBox>
                                 <br />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="tbUsername" Display="Dynamic" ErrorMessage="Enter username!" ForeColor="Red" ValidationGroup="group1"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="tbUsername" Display="Dynamic" ErrorMessage="Enter username!" ForeColor="Red" ValidationGroup="group1" SetFocusOnError="True" Visible="True"></asp:RequiredFieldValidator>
                             </div>
                             <div class="form-group">
                                 <asp:TextBox CssClass="form-control" placeholder="Password" ID="tbPassword" runat="server" TextMode="Password"></asp:TextBox>
                                 <br />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="tbPassword" Display="Dynamic" ErrorMessage="Enter password!" ForeColor="Red" ValidationGroup="group1"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="tbPassword" Display="Dynamic" ErrorMessage="Enter password!" ForeColor="Red" ValidationGroup="group1" SetFocusOnError="True"></asp:RequiredFieldValidator>
                             </div>
                             <div class="form-group">
                                 <asp:Button ID="btnLogin" CssClass="form-control btn btn-primary" runat="server" OnClick="btnNajaviSe_Click" Text="Log In" Width="160" ValidationGroup="group1" />
                             </div>
-
                         </div>
                     </ul>
                 </div>
@@ -84,8 +83,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <asp:TextBox placeholder="Username" CssClass="form-control" ID="tbUserNameReg" runat="server"></asp:TextBox>
+                                            <asp:TextBox placeholder="Username" CssClass="form-control" ID="tbUserNameReg" runat="server" OnTextChanged="tbUserNameReg_TextChanged"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="tbUserNameReg" Display="Dynamic" ErrorMessage="Enter an username" ForeColor="Red" ValidationGroup="group2"></asp:RequiredFieldValidator>
+                                            <asp:Label ID="lblUsernameExists" runat="server" ForeColor="Red" Text="Username already exists!" Visible="False"></asp:Label>
                                         </div>
                                     </div>
                                 </div>

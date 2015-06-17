@@ -9,12 +9,14 @@ namespace BankrotManager
 {
     public partial class Login : System.Web.UI.Page
     {
+        private bool usernameExsists = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["user_id"] != null)
             {
                 Response.Redirect("Default.aspx");
             }
+            lblError.Visible = false;
         }
 
         protected void btnNajaviSe_Click(object sender, EventArgs e)
@@ -30,7 +32,7 @@ namespace BankrotManager
             }
             else
             {
-                lblError.Text = "Неуспешна најава. Обидете се повторно.";
+                
             }
         }
 
@@ -46,17 +48,40 @@ namespace BankrotManager
             string password = tbPasswordReg.Text;
             string email = tbEmailReg.Text;
             Database db = new Database();
-            User result = db.addUser(username, password, name, email);
-            if (result != null)
+            if (!usernameExsists)
             {
-                HttpContext.Current.Session["user_id"] = result.user_id;
-                HttpContext.Current.Session["full_name"] = result.name;
-                HttpContext.Current.Session["username"] = result.username;
-                Response.Redirect("~/Default.aspx");
+                User result = db.addUser(username, password, name, email);
+                if (result != null)
+                {
+                    HttpContext.Current.Session["user_id"] = result.user_id;
+                    HttpContext.Current.Session["full_name"] = result.name;
+                    HttpContext.Current.Session["username"] = result.username;
+                    Response.Redirect("~/Default.aspx");
+                }
+                else
+                {
+                    lblError.Text = "Неуспешна регистрација. Обидете се повторно.";
+                }
             }
             else
             {
-                lblError.Text = "Неуспешна регистрација. Обидете се повторно.";
+                
+            }
+        }
+
+        protected void tbUserNameReg_TextChanged(object sender, EventArgs e)
+        {
+            string username = tbUserNameReg.Text;
+            Database db = new Database();
+            if (db.UsernameExists(username))
+            {
+                lblUsernameExists.Visible = true;
+                usernameExsists = true;
+            }
+            else
+            {
+                lblUsernameExists.Visible = false;
+                usernameExsists = false;
             }
         }
     }

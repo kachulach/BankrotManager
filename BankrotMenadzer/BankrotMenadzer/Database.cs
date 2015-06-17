@@ -863,5 +863,11 @@ namespace BankrotManager
             
             return null;
         }
+
+        internal void removeTransaction(int transaction_id)
+        {
+            //da se izbrise transakcijata so toa id
+            throw new NotImplementedException();
+        }
     }
 }
