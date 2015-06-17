@@ -191,7 +191,7 @@ namespace BankrotManager
                 amount *= -1;
             }
 
-            //Da se komentira ovaa linija koga ke se dodade pole za datum vo dizajnot
+            // Da se komentira ovaa linija koga ke se dodade pole za datum vo dizajnot
             date = DateTime.Now;
 
             // dali e ne prazen komentarot

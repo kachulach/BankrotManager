@@ -16,7 +16,103 @@ namespace BankrotManager
             return new MySqlConnection(connectionString);
         }
 
+        public bool UsernameExists(string username)
+        {
+            string query = "SELECT 1 FROM user WHERE username='" + username+"'";
+            MySqlConnection con = getConnection();
+            bool result = false;
+            try
+            {
+                con.Open();
 
+                MySqlCommand command = new MySqlCommand(query, con);
+                MySqlDataReader r = command.ExecuteReader();
+
+                if (r.Read()) 
+                {
+                    result = Convert.ToInt32(r["1"]) == 1;
+                }
+                
+            }
+            catch (Exception e)
+            {
+                result = false;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public bool addToSaveFunds(int user_id, int sum)
+        {
+            MySqlConnection con = getConnection();
+            bool result = true;
+            try
+            {
+                con.Open();
+
+                string queryUpdateUser = "UPDATE user SET " +
+                                       "funds=funds-" + sum + ", saved_funds=saved_funds+" + sum +
+                                       " WHERE user_id=" + user_id;
+
+                MySqlCommand command = new MySqlCommand(queryUpdateUser, con);
+                command.Prepare();
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                result = false;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+        public List<Transaction> getAffordableItemsWishlist(int user_id, int money)
+        {
+            MySqlConnection con = getConnection();
+
+            try
+            {
+                con.Open();
+
+                string query = "SELECT * FROM transaction "+
+                    "WHERE wishlist=true AND bought=false AND price <= " + money +
+                    " user_id="+user_id;
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(query, con);
+
+                DataSet ds = new DataSet();
+                adapter.Fill(ds);
+
+                List<Transaction> transactions = new List<Transaction>();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    int tran_id = Convert.ToInt32(row["transaction_id"]);
+                    string name = row["name"] as String;
+                    int cat_id = Convert.ToInt32(row["category_id"]);
+                    int price = Convert.ToInt32(row["price"]);
+                    DateTime datum = (DateTime) row["datum"];
+                    int kom_id = Convert.ToInt32(row["comment_id"]);
+                    bool wish = Convert.ToBoolean(row["wishlist"]);
+                    bool bo = Convert.ToBoolean(row["bought"]);
+                    
+                    transactions.Add(new Transaction(tran_id, name, cat_id, price, datum, kom_id, user_id, wish, bo));
+                }
+                return transactions;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
         //Return Transaction instead of String
         public string addTransaction(int category_id, int user_id, int comment_id, int price, DateTime datum,
             string name, bool wishlist)
@@ -41,14 +137,24 @@ namespace BankrotManager
                 command.Parameters.AddWithValue("@comment_id", comment_id);
                 command.Parameters.AddWithValue("@user_id", user_id);
                 command.Parameters.AddWithValue("@wishlist", wishlist);
-                if(wishlist)
+                if (wishlist)
+                {
                     command.Parameters.AddWithValue("@bought", false);
+                }
                 else
                 {
                     command.Parameters.AddWithValue("@bought", true);
-                    result += updateUserFunds(user_id, price);
+                    if (category_id != 27)
+                    {
+                        result += updateUserFunds(user_id, price);
+                    }
+                    
                 }
-
+                //Pri dodavanje na savefunds ZADOLZITELNO prakanje na category_id 27
+                if (category_id == 27)
+                {
+                    result += addToSaveFunds(user_id, price);
+                }
                 command.ExecuteNonQuery();
             }
             catch (Exception e)
@@ -89,9 +195,16 @@ namespace BankrotManager
                 else
                 {
                     command.Parameters.AddWithValue("@bought", true);
-                    result += updateUserFunds(user_id, price);
+                    if (category_id != 27)
+                    {
+                        result += updateUserFunds(user_id, price);
+                    }
                 }
 
+                if (category_id == 27)
+                {
+                    result += addToSaveFunds(user_id, price);
+                }
                 command.ExecuteNonQuery();
                 
             }
@@ -279,6 +392,7 @@ namespace BankrotManager
             {
                 email = email,
                 funds =  0,
+                SavedFunds= 0,
                 name = name,
                 password =  "xxx",
                 user_id =(int) returnId,
@@ -397,22 +511,103 @@ namespace BankrotManager
                 con.Close();
             }
         }
+        private int getUserIdFromTransactionId(int transaction_id) 
+        {
+            MySqlConnection con = getConnection();
+            int user_id = -1;
+            
+            try
+            {
+                con.Open();
+                string query = "SELECT user_id FROM transaction WHERE transaction_id=" + transaction_id;
+                MySqlCommand command = new MySqlCommand(query, con);
 
+                MySqlDataReader r = command.ExecuteReader();
+
+                if (r.Read()) {
+                    user_id = Convert.ToInt32(r["user_id"]);
+                }
+            }
+            catch (Exception e)
+            {
+                user_id = -1;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return user_id;
+        }
+        private int getTransactionPrice(int transaction_id)
+        {
+            MySqlConnection con = getConnection();
+            int price = Int32.MaxValue;
+
+            try
+            {
+                con.Open();
+                string query = "SELECT price FROM transaction WHERE transaction_id=" + transaction_id;
+                MySqlCommand command = new MySqlCommand(query, con);
+
+                MySqlDataReader r = command.ExecuteReader();
+
+                if (r.Read())
+                {
+                    price = Convert.ToInt32(r["price"]);
+                }
+            }
+            catch (Exception e)
+            {
+                price = Int32.MaxValue;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return price;
+        }
         public string buyItemFromWishlist(int transaction_id)
         {
+            int user_id = getUserIdFromTransactionId(transaction_id);
+            if (user_id == -1) return "error user_id: -1";
+            
+            int saved_funds = getSavedFunds(user_id);
+            int funds = currentFunds(user_id);
+
+            int price = getTransactionPrice(transaction_id);
+            if (price == Int32.MaxValue) return "error transaction price for transaction_id:" + transaction_id;
+
+            int priceSaved = Math.Min(saved_funds, price);
+            int priceFunds = price - priceSaved;
+
             MySqlConnection con = getConnection();
             string result = "Ok";
             try
             {
                 con.Open();
 
-                string query = "UPDATE transaction " +
-                               "SET bought=TRUE " +
-                               "WHERE transaction_id=@transaction_id";
+                string queryUpdateTransaction = 
+                                "UPDATE transaction " +
+                                "SET bought=TRUE " +
+                                "WHERE transaction_id="+transaction_id;
+                string queryUpdateUserFunds = 
+                                "UPDATE user "+
+                                "SET funds=funds-" + priceFunds +" "+
+                                "WHERE user_id=" + user_id;
 
-                MySqlCommand command = new MySqlCommand(query, con);
-                command.Prepare();
-                command.Parameters.AddWithValue("@transaction_id", transaction_id);
+                string queryUpdateUserSavedFunds =
+                                "UPDATE user " +
+                                "SET saved_funds=saved_funds-" + priceSaved + " " +
+                                "WHERE user_id=" + user_id;
+
+                string transactionQuery = 
+                    "START TRANSACTION; " +
+                    queryUpdateTransaction + "; " +
+                    queryUpdateUserFunds + "; " +
+                    queryUpdateUserSavedFunds + "; " +
+                    "COMMIT;";
+
+                MySqlCommand command = new MySqlCommand(transactionQuery, con);
                 command.ExecuteNonQuery();
             }
             catch (Exception e)
@@ -423,6 +618,7 @@ namespace BankrotManager
             {
                 con.Close();
             }
+
             return result;
         }
 
@@ -585,7 +781,36 @@ namespace BankrotManager
                 con.Close();
             }
         }
+        public int getSavedFunds(int user_id)
+        {
+            MySqlConnection con = getConnection();
 
+            try
+            {
+                con.Open();
+
+                string query = "SELECT saved_funds FROM user " +
+                                "WHERE user_id=" + user_id;
+
+                MySqlCommand command = new MySqlCommand(query, con);
+                MySqlDataReader res = command.ExecuteReader();
+                while (res.Read())
+                {
+                    int funds = res.GetInt32(0);
+                    return funds;
+                }
+
+                return 0;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         internal static User authenticateUser(string username, string password)
         {

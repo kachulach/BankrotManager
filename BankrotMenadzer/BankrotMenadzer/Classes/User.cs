@@ -38,6 +38,11 @@ namespace BankrotManager
             set;
             get;
         }
+        public int SavedFunds
+        {
+            get;
+            set;
+        }
 
         public User()
         {
