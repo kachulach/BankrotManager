@@ -147,7 +147,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\User.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="DatabaseManagement.cs" />
     <Compile Include="HelperTools.cs" />
@@ -214,6 +214,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
