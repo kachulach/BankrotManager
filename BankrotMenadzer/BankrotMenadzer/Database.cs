@@ -399,7 +399,7 @@ namespace BankrotManager
                 username = username
             };
         }
-        public DataTable getWishlist(int user_id)
+        public List<Transaction> getWishlist(int user_id)
         {
             MySqlConnection con = getConnection();
 
@@ -412,10 +412,28 @@ namespace BankrotManager
                 
                 MySqlCommand command = new MySqlCommand(query, con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-                DataTable dt = new DataTable();
+                DataSet ds = new DataSet();
 
-                adapter.Fill(dt);
-                return dt;
+                adapter.Fill(ds);
+                List<Transaction> transactions = new List<Transaction>();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    int tran_id = Convert.ToInt32(row["transaction_id"]);
+                    string name = row["name"] as String;
+                    int cat_id = Convert.ToInt32(row["category_id"]);
+                    int price = Convert.ToInt32(row["price"]);
+                    DateTime datum = (DateTime)row["datum"];
+                    int kom_id = -1;
+                    if (row["comment_id"].GetType() != typeof(DBNull))
+                    {
+                        kom_id = Convert.ToInt32(row["comment_id"]);
+                    }
+                    bool wish = (bool)row["wishlist"];
+                    bool bo = (bool)row["bought"];
+
+                    transactions.Add(new Transaction(tran_id, name, cat_id, price, datum, kom_id, user_id, wish, bo));
+                }
+                return transactions;
             }
             catch (Exception e)
             {
@@ -427,7 +445,7 @@ namespace BankrotManager
             }
         }
 
-        public DataTable getBoughtItemsFromWishlist(int user_id)
+        public List<Transaction> getBoughtItemsFromWishlist(int user_id)
         {
             MySqlConnection con = getConnection();
 
@@ -440,10 +458,29 @@ namespace BankrotManager
 
                 MySqlCommand command = new MySqlCommand(query, con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-                DataTable dt = new DataTable();
+                DataSet ds = new DataSet();
 
-                adapter.Fill(dt);
-                return dt;
+                adapter.Fill(ds);
+
+                List<Transaction> transactions = new List<Transaction>();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    int tran_id = Convert.ToInt32(row["transaction_id"]);
+                    string name = row["name"] as String;
+                    int cat_id = Convert.ToInt32(row["category_id"]);
+                    int price = Convert.ToInt32(row["price"]);
+                    DateTime datum = (DateTime)row["datum"];
+                    int kom_id = -1;
+                    if (row["comment_id"].GetType() != typeof(DBNull))
+                    {
+                        kom_id = Convert.ToInt32(row["comment_id"]);
+                    }
+                    bool wish = (bool)row["wishlist"];
+                    bool bo = (bool)row["bought"];
+
+                    transactions.Add(new Transaction(tran_id, name, cat_id, price, datum, kom_id, user_id, wish, bo));
+                }
+                return transactions;
             }
             catch (Exception e)
             {
@@ -455,7 +492,7 @@ namespace BankrotManager
             }
         }
 
-        public DataTable getBoughtItems(int user_id)
+        public List<Transaction> getBoughtItems(int user_id)
         {
             MySqlConnection con = getConnection();
 
@@ -468,10 +505,28 @@ namespace BankrotManager
 
                 MySqlCommand command = new MySqlCommand(query, con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-                DataTable dt = new DataTable();
+                DataSet ds = new DataSet();
 
-                adapter.Fill(dt);
-                return dt;
+                adapter.Fill(ds);
+                List<Transaction> transactions = new List<Transaction>();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    int tran_id = Convert.ToInt32(row["transaction_id"]);
+                    string name = row["name"] as String;
+                    int cat_id = Convert.ToInt32(row["category_id"]);
+                    int price = Convert.ToInt32(row["price"]);
+                    DateTime datum = (DateTime)row["datum"];
+                    int kom_id = -1;
+                    if (row["comment_id"].GetType() != typeof(DBNull))
+                    {
+                        kom_id = Convert.ToInt32(row["comment_id"]);
+                    }
+                    bool wish = (bool)row["wishlist"];
+                    bool bo = (bool)row["bought"];
+
+                    transactions.Add(new Transaction(tran_id, name, cat_id, price, datum, kom_id, user_id, wish, bo));
+                }
+                return transactions;
             }
             catch (Exception e)
             {
@@ -483,8 +538,8 @@ namespace BankrotManager
             }
         }
 
-        
-        public DataTable getIncomes(int user_id)
+
+        public List<Transaction> getIncomes(int user_id)
         {
             MySqlConnection con = getConnection();
 
@@ -497,10 +552,28 @@ namespace BankrotManager
 
                 MySqlCommand command = new MySqlCommand(query, con);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-                DataTable dt = new DataTable();
+                DataSet ds = new DataSet();
 
-                adapter.Fill(dt);
-                return dt;
+                adapter.Fill(ds);
+                List<Transaction> transactions = new List<Transaction>();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    int tran_id = Convert.ToInt32(row["transaction_id"]);
+                    string name = row["name"] as String;
+                    int cat_id = Convert.ToInt32(row["category_id"]);
+                    int price = Convert.ToInt32(row["price"]);
+                    DateTime datum = (DateTime)row["datum"];
+                    int kom_id = -1;
+                    if (row["comment_id"].GetType() != typeof(DBNull))
+                    {
+                        kom_id = Convert.ToInt32(row["comment_id"]);
+                    }
+                    bool wish = (bool)row["wishlist"];
+                    bool bo = (bool)row["bought"];
+
+                    transactions.Add(new Transaction(tran_id, name, cat_id, price, datum, kom_id, user_id, wish, bo));
+                }
+                return transactions;
             }
             catch (Exception e)
             {
