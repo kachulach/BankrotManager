@@ -13,7 +13,7 @@
         }
     </style>
 
-    <div id="message-success" class="alert alert-success text-center hidden" role="alert" style="width:150px; height:70px; position:fixed; top:40px; right:10px;">
+    <div id="message-success" class="alert text-center hidden" role="alert" style="width:200px; height:50px; position:fixed; top:40px; right:10px;">
         Message about transaction here
     </div> 
 

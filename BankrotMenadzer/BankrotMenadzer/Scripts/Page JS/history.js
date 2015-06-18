@@ -108,30 +108,54 @@ function getUrlParameter(sParam) {
 //Success/Error messages
 
 function waitingSuccess() {
+
+    fields.success.text("Removing transaction...");
+
+    if (!fields.success.hasClass('alert-info')) {
+        fields.success.addClass('alert-info');
+    }
+
     if (fields.success.hasClass('hidden')) {
         fields.success.removeClass('hidden');
     }
-
-    fields.success.text("Removing transaction...");
 }
 
 function showSuccess() {
-    if (fields.success.hasClass('hidden')) {
-        fields.success.removeClass('hidden');
+
+    if (!fields.success.hasClass('hidden')) {
+        fields.success.addClass('hidden');
     }
 
     fields.success.text("Success!");
+
+    if (fields.success.hasClass('alert-info')) {
+        fields.success.removeClass('alert-info');
+    }
+    fields.success.addClass('alert-success');
+  
+    fields.success.removeClass('hidden');
+ 
+
     setTimeout(function () {
         hideSuccess();
     }, 3000);
 }
 
 function showError(error) {
-    if (fields.success.hasClass('hidden')) {
-        fields.success.removeClass('hidden');
+
+    if (!fields.success.hasClass('hidden')) {
+        fields.success.addClass('hidden');
     }
 
     fields.success.text(error);
+
+    if (!fields.success.hasClass('alert-info')) {
+        fields.success.removeClass('alert-info');
+    }
+    fields.success.addClass('alert-danger');
+
+    fields.success.removeClass('hidden');
+
     setTimeout(function () {
         hideSuccess();
     }, 3000);
@@ -140,5 +164,17 @@ function showError(error) {
 function hideSuccess() {
     if (!fields.success.hasClass('hidden')) {
         fields.success.addClass('hidden');
+    }
+
+    if (fields.success.hasClass('alert-info')) {
+        fields.success.removeClass('alert-info');
+    }
+
+    if (fields.success.hasClass('alert-success')) {
+        fields.success.removeClass('alert-success');
+    }
+
+    if (fields.success.hasClass('alert-danger')) {
+        fields.success.removeClass('alert-danger');
     }
 }
