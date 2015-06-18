@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BankrotManager.Models;
+using System.Web.Services;
 
 namespace BankrotManager
 {
@@ -75,6 +76,14 @@ namespace BankrotManager
         {
             Database db = new Database();
             db.removeTransaction(transaction_id);
+        }
+
+        [WebMethod]
+        public static bool AJAX_removeTransaction(int transaction_id)
+        {
+            Database db = new Database();
+            return db.removeTransaction(transaction_id);
+           
         }
     }
 }

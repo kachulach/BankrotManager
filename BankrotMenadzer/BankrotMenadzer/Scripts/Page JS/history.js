@@ -1,4 +1,8 @@
-﻿$(document).ready(function () {
+﻿var fields = {};
+
+$(document).ready(function () {
+
+    fields.success = $("#message-success");
 
     var today = moment().format('DD.MM.YYYY');
 
@@ -32,19 +36,24 @@
 
 
     $('.removeTransaction').on("click", function (event) {
+        var row = $(this);
         var id = $(this).data("id");
-        console.log(id);
-        //$.ajax({
-        //    type: 'POST',
-        //    url: 'Default.aspx/AJAX_TransactionData',
-        //    data: '{from: "' + formattedNow + '", to: "' + formattedNow + '"}',
-        //    contentType: "application/json; charset=utf-8",
-        //    dataType: "json",
-        //    success: setData,
-        //    failure: function (response) {
-        //        alert(response.d);
-        //    }
-        //});
+        waitingSuccess();
+        $.ajax({
+            type: 'POST',
+            url: 'History.aspx/AJAX_removeTransaction',
+            data: '{transaction_id: "' + id +'"}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function () {
+                row.parent().hide();
+                showSuccess();
+            },
+            failure: function (response) {
+                showError(response.d);
+            }
+        });
+
     });
 
 
@@ -54,7 +63,9 @@
 });
 
 
-
+function result() {
+    console.log("Deleted");
+}
 
 function initializeData() {
 
@@ -93,6 +104,41 @@ function getUrlParameter(sParam) {
     return null;
 }
 
-function removeTransaction() {
-    console.log("REMOVE TRANSACTION");
+
+//Success/Error messages
+
+function waitingSuccess() {
+    if (fields.success.hasClass('hidden')) {
+        fields.success.removeClass('hidden');
+    }
+
+    fields.success.text("Removing transaction...");
+}
+
+function showSuccess() {
+    if (fields.success.hasClass('hidden')) {
+        fields.success.removeClass('hidden');
+    }
+
+    fields.success.text("Success!");
+    setTimeout(function () {
+        hideSuccess();
+    }, 3000);
+}
+
+function showError(error) {
+    if (fields.success.hasClass('hidden')) {
+        fields.success.removeClass('hidden');
+    }
+
+    fields.success.text(error);
+    setTimeout(function () {
+        hideSuccess();
+    }, 3000);
+}
+
+function hideSuccess() {
+    if (!fields.success.hasClass('hidden')) {
+        fields.success.addClass('hidden');
+    }
 }
