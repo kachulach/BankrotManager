@@ -5,6 +5,7 @@ using System.Web;
 
 namespace BankrotManager
 {
+    [Serializable]
     public class User
     {
         public int user_id
