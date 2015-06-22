@@ -1,24 +1,27 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="History.aspx.cs" Inherits="BankrotManager.History" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentplaceHolder1" runat="server">
-    
+
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/2.9.0/moment.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker-bs3.css" />
     <script src="Scripts/Page JS/history.js"></script>
 
     <style>
-        .removeTransaction:hover
-        {
-            color:red;
+        .removeTransaction:hover {
+            color: red;
         }
     </style>
+
+    <div id="message-success" class="alert text-center hidden" role="alert" style="width:200px; height:50px; position:fixed; top:40px; right:10px;">
+        Message about transaction here
+    </div> 
 
     <div class="h1 text-center">History</div>
     <div class="row">
         <div id="calendar-picker" class="selectbox">
             <button class="btn btn-success btn-block" id="button-select-date"><span class="glyphicon glyphicon-calendar"></span>Select date</button>
-		</div>
+        </div>
     </div>
     <div class="row">
         <div class="">
@@ -38,17 +41,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <asp:Repeater runat="server" ID="repeater_stats">
-                                <ItemTemplate>
-                                    <tr class="<%# Container.ItemIndex % 2 == 0 ? "success" : "warning" %>">
-                                        <td><%# DataBinder.Eval(Container.DataItem, "Category") %></td>
-                                        <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
-                                        <td><%# DataBinder.Eval(Container.DataItem, "Transactions") %></td>
-                                        <td><%# DataBinder.Eval(Container.DataItem, "Percent") %></td>
-                                       
-                                    </tr>
-                                </ItemTemplate>
-                            </asp:Repeater>
+                                <asp:Repeater runat="server" ID="repeater_stats">
+                                    <ItemTemplate>
+                                        <tr class="<%# Container.ItemIndex % 2 == 0 ? "success" : "warning" %>">
+                                            <td><%# DataBinder.Eval(Container.DataItem, "Category") %></td>
+                                            <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
+                                            <td><%# DataBinder.Eval(Container.DataItem, "Transactions") %></td>
+                                            <td><%# DataBinder.Eval(Container.DataItem, "Percent") %></td>
+
+                                        </tr>
+                                    </ItemTemplate>
+                                </asp:Repeater>
                             </tbody>
                         </table>
                     </div>
@@ -56,6 +59,8 @@
             </div>
         </div>
     </div>
+
+   
 
     <div class="row">
         <div class="panel panel-info">
@@ -112,22 +117,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <asp:Repeater runat="server" id="repeater_rawdata">
-                            <ItemTemplate>
+                            <asp:Repeater runat="server" ID="repeater_rawdata">
+                                <ItemTemplate>
                                     <tr class="<%# Container.ItemIndex % 2 == 0 ? "success" : "warning" %>">
                                         <td><%# DataBinder.Eval(Container.DataItem, "Name") %></td>
                                         <td><%# DataBinder.Eval(Container.DataItem, "Category.Name") %></td>
                                         <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
                                         <td><%# DataBinder.Eval(Container.DataItem, "Date") %></td>
-                                         <td class="removeTransaction" data-id="<%# DataBinder.Eval(Container.DataItem, "ID")%>"><i class="glyphicon glyphicon-remove"></i></td>
+                                        <td class="removeTransaction" data-id="<%# DataBinder.Eval(Container.DataItem, "ID")%>"><i class="glyphicon glyphicon-remove"></i></td>
                                     </tr>
                                 </ItemTemplate>
-                        </asp:Repeater>
+                            </asp:Repeater>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </asp:Content>
