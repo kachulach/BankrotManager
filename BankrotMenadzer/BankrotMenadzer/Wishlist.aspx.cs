@@ -30,5 +30,20 @@ namespace BankrotManager
             //this.repeater_rawdata.DataSource = wishlist;
             //this.repeater_rawdata.DataBind();
         }
+
+        private void getAffordableItemsWishlist()
+        {
+            User u = (User)Session["userInfo"];
+            int user_id = u.getUserId();
+            int money = (int)u.getFunds();
+            var affordableWishlist = db.getAffordableItemsWishlist(user_id, money);
+
+            //funkcijata za getAffordableItemsWishlist da vrakja lista od transakcii
+            //da se dodade repiter za podatocite kako kaj History so moznost za brisenje (repiter_rawdata vo history)
+            //da se otkomentira kodot podolu za polnenje na podatocite vo tabelata
+
+            //this.repeater_rawdata.DataSource = affordableWishlist;
+            //this.repeater_rawdata.DataBind();
+        }
     }
 }
