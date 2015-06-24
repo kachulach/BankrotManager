@@ -51,7 +51,7 @@
                                             <td><%# DataBinder.Eval(Container.DataItem, "Category") %></td>
                                             <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
                                             <td><%# DataBinder.Eval(Container.DataItem, "Transactions") %></td>
-                                            <td><%# DataBinder.Eval(Container.DataItem, "Percent") %></td>
+                                            <td><%# Math.Abs((float)(DataBinder.Eval(Container.DataItem, "Percent"))) %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:Repeater>
