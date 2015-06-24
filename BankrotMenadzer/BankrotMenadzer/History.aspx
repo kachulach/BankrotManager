@@ -21,10 +21,11 @@
     <div class="h1 text-center">History</div>
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1">
-            <div class="well">
+            
                 <div id="calendar-picker" class="selectbox">
-                    <button class="btn btn-success btn-block" id="button-select-date"><span class="glyphicon glyphicon-calendar"></span>Select date</button>
+                    <button class="btn btn-success" id="button-select-date"><span class="glyphicon glyphicon-calendar"></span>Select date</button>
                 </div>
+            <div style="height:20px;">
             </div>
         </div>
     </div>
