@@ -85,7 +85,7 @@ namespace BankrotManager
             }
             else
             {
-                return "error";
+                return "danger";
             }
         }
     }
