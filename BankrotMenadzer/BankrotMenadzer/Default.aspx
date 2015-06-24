@@ -10,18 +10,18 @@
     <script src="Scripts/Page JS/home.js"></script>
 
     <div class="row">
+        <div class="col-xs-7">
         <form role="form" data-toggle="validator">
             <div class="row">
-                <div class="col-md-2">
-                </div>
-                <div class="col-md-4">
+                
+                <div class="col-xs-6">
                     <div class="form-group">
                         <label for="name">Transaction name:</label>
                         <input class="form-control" id="name" placeholder="Transaction name" required>    
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-xs-6">
                     <div class="form-group">
                         <label for="amount">Amount:</label>
                         <div class="input-group">
@@ -31,13 +31,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2">
-                </div>
             </div>
             <div class="row">
-                <div class="col-md-2">
-                </div>
-                <div class="col-md-4">
+                
+                <div class="col-md-6 col-md-offset-0">
                     <div class="form-group">
                         <label for="category">Category:</label>
                         <div class="dropdown">
@@ -55,18 +52,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="comment">Comment:</label>
                         <input class="form-control" id="comment" placeholder="Comment">
                     </div>
                 </div>
-                <div class="col-md-2">
-                </div>
+                
             </div>
             <div class="row">
-                <div class="col-md-2">
-                </div>
                 <div class="col-md-2">
                     <button class="btn btn-success btn-block" id="transaction-add" type="submit"><span class="glyphicon glyphicon-plus"></span> Income</button>
                 </div>
@@ -76,13 +70,11 @@
                 <div class="col-md-2">
                     <button class="btn btn-warning btn-block" id="transaction-transfer" type="submit"><span class="glyphicon glyphicon-euro"></span> Save</button>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <button class="btn btn-primary btn-block" id="transaction-wishlist" type="submit"><span class="glyphicon glyphicon-piggy-bank"></span>Add to wishlist</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-default btn-block" id="transaction-clear-form"><span class="glyphicon glyphicon-remove"></span>Clear form</button>
-                </div>
-                <div class="col-md-1">
+                    <button class="btn btn-info btn-block" id="transaction-clear-form"><span class="glyphicon glyphicon-remove"></span>Clear form</button>
                 </div>
             </div>
             <div class="row">
@@ -94,8 +86,8 @@
                 </div>                
             </div>
         </form>
-        
-        <div class="col-md-6">
+        </div>
+        <div class="col-xs-5">
             <div class="table-responsive">
                 <table class="table table-striped text-center" style="vertical-align: middle">
                     <tbody>
@@ -122,20 +114,18 @@
     </div>
     <hr />
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3 col-md-offset-2">
             <div class="pie-chart-week">
                 <h3>Income chart</h3>
-                <canvas id="chart_weekSpendings" width="250" height="250"></canvas>
+                <canvas id="chart_weekSpendings"></canvas>
                 <div class="chart-legend">
                 </div>
             </div>
         </div>
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-3 col-md-offset-2">
             <div id="pie-chart-monthly">
                 <h3>Spending chart</h3>
-                <canvas id="chart_monthlySpendings" width="250" height="250"></canvas>
+                <canvas id="chart_monthlySpendings" ></canvas>
                 <div class="chart-legend">
                 </div>
             </div>

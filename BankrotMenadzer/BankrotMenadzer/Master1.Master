@@ -80,10 +80,9 @@
     <script src="Scripts/jquery-ui-1.10.4.js"></script>
     <script src="Scripts/Page JS/master.js"></script>
 
-    <div class="container" style="margin-top: 50px; padding-top: 10px; width: 1000px; background-color: white;">
+    <div class="container-fluid" style=" background-color: white;">
         <asp:ContentPlaceHolder ID="ContentplaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
-    </div>
     </div>
     <div id="footer" class="navbar navbar-default navbar-default">
         <p style="text-align: center; vertical-align: central; padding-top: 5px">Bankrupt Manager © 2015. All rights reserved.</p>
