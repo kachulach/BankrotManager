@@ -1,4 +1,5 @@
 ﻿var fields = {};
+var bar_chart = null;
 
 $(document).ready(function () {
 
@@ -56,10 +57,7 @@ $(document).ready(function () {
 
     });
 
-
-   
-
-    //initializeData();
+   //initializeData();
 });
 
 
@@ -187,3 +185,4 @@ function hideSuccess() {
         fields.success.removeClass('alert-danger');
     }
 }
+

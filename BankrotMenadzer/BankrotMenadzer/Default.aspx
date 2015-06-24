@@ -94,30 +94,6 @@
                 </div>                
             </div>
         </form>
-        
-        <div class="col-md-6">
-            <div class="table-responsive">
-                <table class="table table-striped text-center" style="vertical-align: middle">
-                    <tbody>
-                        <tr class="active">
-                            <td>Banana</td>
-                            <td>1265 MKD</td>
-                            <td><a class="btn btn-default">Buy now!</a></td>
-                        </tr>
-                        <tr class="active">
-                            <td>Maslinka</td>
-                            <td>261 MKD</td>
-                            <td><a class="btn btn-default">Buy now!</a></td>
-                        </tr>
-                        <tr class="active">
-                            <td>UESBE Kabel</td>
-                            <td>665 MKD</td>
-                            <td><a class="btn btn-default">Buy now!</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
     </div>
     <hr />
@@ -141,4 +117,5 @@
             </div>
         </div>
     </div>
+
 </asp:Content>

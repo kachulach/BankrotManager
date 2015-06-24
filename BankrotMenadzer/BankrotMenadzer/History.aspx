@@ -13,9 +13,9 @@
         }
     </style>
 
-    <div id="message-success" class="alert text-center hidden" role="alert" style="width:200px; height:50px; position:fixed; top:40px; right:10px;">
+    <div id="message-success" class="alert text-center hidden" role="alert" style="width: 200px; height: 50px; position: fixed; top: 40px; right: 10px;">
         Message about transaction here
-    </div> 
+    </div>
 
     <div class="h1 text-center">History</div>
     <div class="row">
@@ -59,7 +59,12 @@
         </div>
     </div>
 
-   
+    <div class="bar-chart">
+        <h3>Category chart</h3>
+        <canvas id="chart-category-spendings" width="250" height="250"></canvas>
+        <div class="chart-legend">
+        </div>
+    </div>
 
     <div class="row">
         <div class="panel panel-info">

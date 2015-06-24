@@ -50,7 +50,7 @@ var BMChart = function (canvasID, chartType, data, options, hasLegend) {
         switch (chartType) {
             case 'pie': this.chart = new Chart(this.context).Pie({}, this.options); break;
                 //TODO Implement Bar charts
-            case 'bar': this.chart = new Chart(this.context).Bar("test"); break;
+            case 'bar': this.chart = new Chart(this.context).Bar({}, this.options); break;
         }
 
 
