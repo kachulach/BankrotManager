@@ -79,11 +79,10 @@ namespace BankrotManager
         }
 
         [WebMethod]
-        public static bool AJAX_removeTransaction(int transaction_id)
+        public static string AJAX_removeTransaction(int transaction_id)
         {
             Database db = new Database();
-            return db.removeTransaction(transaction_id);
-           
+            return db.removeTransaction(transaction_id).ToString();
         }
     }
 }

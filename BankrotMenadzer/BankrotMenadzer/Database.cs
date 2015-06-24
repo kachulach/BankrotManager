@@ -44,8 +44,10 @@ namespace BankrotManager
             }
             return result;
         }
+
         public bool addToSaveFunds(int user_id, int sum)
         {
+            sum = Math.Abs(sum);
             MySqlConnection con = getConnection();
             bool result = true;
             try
@@ -71,6 +73,36 @@ namespace BankrotManager
             }
             return result;
         }
+
+        public bool removeFromSaveFunds(int user_id, int sum)
+        {
+            sum = Math.Abs(sum);
+            MySqlConnection con = getConnection();
+            bool result = true;
+            try
+            {
+                con.Open();
+
+                string queryUpdateUser = "UPDATE user SET " +
+                                       "funds=funds+" + sum + ", saved_funds=saved_funds-" + sum +
+                                       " WHERE user_id=" + user_id;
+
+                MySqlCommand command = new MySqlCommand(queryUpdateUser, con);
+                command.Prepare();
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                result = false;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
         public List<Transaction> getAffordableItemsWishlist(int user_id, int money)
         {
             MySqlConnection con = getConnection();
@@ -1000,13 +1032,14 @@ namespace BankrotManager
 
             return result;
         }
-        internal bool removeTransaction(int transaction_id)
+        internal Transaction removeTransaction(int transaction_id)
         {
             MySqlConnection con = getConnection();
+            Transaction t = null;
             bool result = true;
             try
             {
-                Transaction t = getTransaction(transaction_id);
+                t = getTransaction(transaction_id);
                 con.Open();
                 
                 string queryUpdateUser = "DELETE FROM transaction " +
@@ -1018,15 +1051,16 @@ namespace BankrotManager
                 
                 if (!t.IsWishlist && t.IsBought && t.Category.ID != 27) 
                 {
-                    updateUserFunds(t.User_ID, t.Amount * -1);
+                    updateUserFunds(t.User_ID, -t.Amount);
                 }
                 else if (t.Category.ID == 27) 
                 {
-                    addToSaveFunds(t.User_ID, t.Amount * -1);
+                    removeFromSaveFunds(t.User_ID, t.Amount);
+                    //updateUserFunds(t.User_ID, t.Amount);
                 }
                 else if (t.IsWishlist && t.IsBought)
                 {
-                    updateUserFunds(t.User_ID, t.Amount);
+                    updateUserFunds(t.User_ID, -t.Amount);
                 }
 
                 
@@ -1042,7 +1076,7 @@ namespace BankrotManager
             }
 
 
-            return result;
+            return t;
         }
 
 

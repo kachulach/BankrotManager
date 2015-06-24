@@ -1,6 +1,5 @@
 ﻿var chart1;
 var chart2;
-var currentFunds;
 var fields = {};
 
 $(document).ready(function () {
@@ -22,6 +21,14 @@ $(document).ready(function () {
     $("#transaction-remove").on("click", function (event) {
         if (!$(this).hasClass("disabled")) {
             post_transaction(event, 2);
+            clearData();
+        }
+    });
+
+
+    $("#transaction-transfer").on("click", function (event) {
+        if (!$(this).hasClass("disabled")) {
+            post_transaction(event, 2, 27);
             clearData();
         }
     });
@@ -107,13 +114,22 @@ function updateCurrentFunds() {
 }
 
 function successUpdateCurrentFunds(response) {
-    currentFunds = parseInt(response.d);
+    console.log(response);
+    currentFunds = JSON.parse(response.d);
     changeCurrentFunds(currentFunds);
 }
 
-function changeCurrentFunds(funds) {
-    console.log(funds);
-    $("#funds").html("<b>" + funds + "</b><small> MKD</small>");
+function changeCurrentFunds(fund_data) {
+    console.log(fund_data);
+    var funds = fund_data.funds;
+    var saved_funds = fund_data.saved_funds;
+    //$("#funds").html("<b>" + funds + "</b><small> MKD</small>");
+    if (funds != NaN) {
+        update_funds(funds);
+    }
+    if (saved_funds != NaN) {
+        update_save_funds(saved_funds);
+    }
 }
 
 function initSavings(data) {
@@ -126,7 +142,7 @@ function initSpendings(data) {
     chart2 = new BMChart("#chart_monthlySpendings", "pie", data.d, null, true);
 }
 
-function post_transaction(event, type) {
+function post_transaction(event, type, cat_id) {
 
     event.preventDefault();
     waitingSuccess();
@@ -178,11 +194,30 @@ function post_transaction(event, type) {
 
     //Update chart instantly
     function onSuccess(response) {
+        console.log(response);
         jsonObj = JSON.parse(response.d);
+        console.log(jsonObj);
+        console.log(currentFunds);
         //chart1.addTransaction(jsonObj);
         //Maybe loading indicator?
         //jsonObj
-        changeCurrentFunds(currentFunds + jsonObj.amount);
+        var json_fund_data = null;
+
+        if (jsonObj.category != "Zasteda") {
+            json_fund_data = {
+                funds: currentFunds.funds + jsonObj.amount,
+                saved_funds: currentFunds.saved_funds
+            }
+        }
+        else {
+            json_fund_data = {
+                funds: currentFunds.funds + jsonObj.amount,
+                saved_funds: currentFunds.saved_funds + Math.abs(jsonObj.amount)
+            }
+            console.log("SAVED DATA");
+            console.log(json_fund_data);
+        }
+        changeCurrentFunds(json_fund_data);
         showSuccess();
         //console.log(response);
     }

@@ -40,6 +40,24 @@ namespace BankrotManager {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl liWishlist;
         
         /// <summary>
+        /// lbl_funds control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_funds;
+        
+        /// <summary>
+        /// lbl_saved_funds control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_saved_funds;
+        
+        /// <summary>
         /// liKorisnik control.
         /// </summary>
         /// <remarks>

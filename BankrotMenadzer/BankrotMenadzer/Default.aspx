@@ -8,53 +8,7 @@
     <script src="Scripts/Chart.min.js"></script>
     <script src="Scripts/validator.js"></script>
     <script src="Scripts/Page JS/home.js"></script>
-    <div class="row">
-        <div class="page-header">
-            <h1>Welcome back! <small>You can see your current funds and you can create new transactions on this page. Also, you can check your weekly report and things in your wishlist that you can afford.</small></h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="h3 text-center">Current funds:</div>
-        </div>
-        <div class="col-md-6">
-            <div class="h3 text-center">Affordable items in wishlist:</div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div id="funds" class="h1 text-center" style="font-size: 72px"><b>0</b><small> MKD</small></div>
-        </div>
-        <div class="col-md-6">
-            <div class="table-responsive">
-                <table class="table table-striped text-center" style="vertical-align: middle">
-                    <tbody>
-                        <tr class="active">
-                            <td>Banana</td>
-                            <td>1265 MKD</td>
-                            <td><a class="btn btn-default">Buy now!</a></td>
-                        </tr>
-                        <tr class="active">
-                            <td>Maslinka</td>
-                            <td>261 MKD</td>
-                            <td><a class="btn btn-default">Buy now!</a></td>
-                        </tr>
-                        <tr class="active">
-                            <td>UESBE Kabel</td>
-                            <td>665 MKD</td>
-                            <td><a class="btn btn-default">Buy now!</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-md-12">
-            <div class="h2 text-center">Transactions - <small>Fill out the form below to add a new transaction</small></div>
-        </div>
-    </div>
+
     <div class="row">
         <form role="form" data-toggle="validator">
             <div class="row">
@@ -87,7 +41,7 @@
                     <div class="form-group">
                         <label for="category">Category:</label>
                         <div class="dropdown">
-                            <button class="btn btn-default btn-block dropdown-toggle" type="button" id="category" data-toggle="dropdown">
+                            <button class="btn btn-default btn-block dropdown-toggle" type="button" id="category" data-toggle="dropdown" value="0">
                                 Choose category
                                 <span class="caret"></span>
                             </button>
@@ -114,12 +68,13 @@
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-2">
-                    <!-- Transactions -->
-                    <!-- Income -->
-                    <button class="btn btn-success btn-block" id="transaction-add" type="submit"><span class="glyphicon glyphicon-plus"></span>Add income</button>
+                    <button class="btn btn-success btn-block" id="transaction-add" type="submit"><span class="glyphicon glyphicon-plus"></span> Income</button>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-danger btn-block" id="transaction-remove" type="submit"><span class="glyphicon glyphicon-minus"></span>Add expenditure</button>
+                    <button class="btn btn-danger btn-block" id="transaction-remove" type="submit"><span class="glyphicon glyphicon-minus"></span> Spending</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-warning btn-block" id="transaction-transfer" type="submit"><span class="glyphicon glyphicon-euro"></span> Save</button>
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-primary btn-block" id="transaction-wishlist" type="submit"><span class="glyphicon glyphicon-piggy-bank"></span>Add to wishlist</button>
@@ -139,18 +94,38 @@
                 </div>                
             </div>
         </form>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-md-12">
-            <div class="h2 text-center">Spending reports - <small>Nice looking charts of your weekly and monthly spendings</small></div>
+        
+        <div class="col-md-6">
+            <div class="table-responsive">
+                <table class="table table-striped text-center" style="vertical-align: middle">
+                    <tbody>
+                        <tr class="active">
+                            <td>Banana</td>
+                            <td>1265 MKD</td>
+                            <td><a class="btn btn-default">Buy now!</a></td>
+                        </tr>
+                        <tr class="active">
+                            <td>Maslinka</td>
+                            <td>261 MKD</td>
+                            <td><a class="btn btn-default">Buy now!</a></td>
+                        </tr>
+                        <tr class="active">
+                            <td>UESBE Kabel</td>
+                            <td>665 MKD</td>
+                            <td><a class="btn btn-default">Buy now!</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </div>
     <hr />
     <div class="row">
         <div class="col-md-6">
             <div class="pie-chart-week">
-                <canvas id="chart_weekSpendings" width="400" height="400"></canvas>
+                <h3>Income chart</h3>
+                <canvas id="chart_weekSpendings" width="250" height="250"></canvas>
                 <div class="chart-legend">
                 </div>
             </div>
@@ -159,7 +134,8 @@
         </div>
         <div class="col-md-6">
             <div id="pie-chart-monthly">
-                <canvas id="chart_monthlySpendings" width="400" height="400"></canvas>
+                <h3>Spending chart</h3>
+                <canvas id="chart_monthlySpendings" width="250" height="250"></canvas>
                 <div class="chart-legend">
                 </div>
             </div>

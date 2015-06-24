@@ -45,9 +45,9 @@ $(document).ready(function () {
             data: '{transaction_id: "' + id +'"}',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function () {
+            success: function (data) {
                 row.parent().hide();
-                showSuccess();
+                showSuccessRemove(data);
             },
             failure: function (response) {
                 showError(response.d);
@@ -120,7 +120,16 @@ function waitingSuccess() {
     }
 }
 
-function showSuccess() {
+function showSuccessRemove(data) {
+    jsonObj = JSON.parse(data.d);
+    console.log(jsonObj);
+    if (jsonObj.category == "Zasteda") {
+        currentFunds.funds -= jsonObj.amount;
+        currentFunds.saved_funds += jsonObj.amount;
+    } else {
+        currentFunds.funds -= jsonObj.amount;
+    }
+    update_all_funds();
 
     if (!fields.success.hasClass('hidden')) {
         fields.success.addClass('hidden');
