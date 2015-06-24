@@ -18,7 +18,7 @@
         Message about transaction here
     </div>
 
-    <div class="h1 text-center">History</div>
+    <div class="h1 text-center">Stats</div>
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1">
             
