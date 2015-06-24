@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master1.Master" AutoEventWireup="true" CodeBehind="Wishlist.aspx.cs" Inherits="BankrotManager.Wishlist" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentplaceHolder1" runat="server">
+    <script src="Scripts/Page JS/wishlist.js"></script>
     <div class="h1 text-center">Wishlist</div>
 
     <div class="row">
@@ -24,13 +25,16 @@
                         <tbody>
                             <asp:Repeater runat="server" ID="repeater_wishlist">
                                 <ItemTemplate>
-                                    <tr class="<%# Container.ItemIndex % 2 == 0 ? "success" : "warning" %>">
+                                    
+                                    <tr class="<%# GetClass(DataBinder.Eval(Container.DataItem, "Amount").ToString()) %>">
                                         <td><%# DataBinder.Eval(Container.DataItem, "Name") %></td>
                                         <td><%# DataBinder.Eval(Container.DataItem, "Category.Name") %></td>
                                         <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
                                         <td><%# DataBinder.Eval(Container.DataItem, "Date") %></td>
-                                        <td><button class="ui-button-text-icon-primary">Buy</button></td>
-                                        <td class="removeTransaction" data-id="<%# DataBinder.Eval(Container.DataItem, "ID")%>"><i class="glyphicon glyphicon-remove"></i></td>
+                                        <td>
+                                            <button class="ui-button-text-icon-primary buy-wishlist-item" data-id="<%# DataBinder.Eval(Container.DataItem, "ID")%>">Buy</button>
+                                        </td>
+                                        <td class="remove-wishlist-item" data-id="<%# DataBinder.Eval(Container.DataItem, "ID")%>"><i class="glyphicon glyphicon-remove"></i></td>
                                     </tr>
                                 </ItemTemplate>
                             </asp:Repeater>

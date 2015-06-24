@@ -19,6 +19,7 @@ namespace BankrotManager
         Spending = 1,
         Saving = 2,
         Wishlist = 3,
+        Transfer = 4
     }
 
     public partial class Default : System.Web.UI.Page
@@ -64,6 +65,9 @@ namespace BankrotManager
                 case "3":
                     tType = TransactionType.Wishlist;
                     break;
+                case "4":
+                    tType = TransactionType.Transfer;
+                    break;
             }
 
             if (string.IsNullOrWhiteSpace(name))
@@ -95,7 +99,6 @@ namespace BankrotManager
             int comment_id = -1;
             if (!string.IsNullOrWhiteSpace(comment))
             {
-
                 comment_id = (int)db.addComment(comment);
                 db.addTransaction(category_id, user, (int)comment_id, amount, DateTime.Now, name, type == TransactionType.Wishlist);
             }

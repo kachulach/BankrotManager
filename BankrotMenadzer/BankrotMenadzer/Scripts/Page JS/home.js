@@ -28,7 +28,7 @@ $(document).ready(function () {
 
     $("#transaction-transfer").on("click", function (event) {
         if (!$(this).hasClass("disabled")) {
-            post_transaction(event, 2, 27);
+            post_transaction(event, 4, 27);
             clearData();
         }
     });
@@ -114,13 +114,11 @@ function updateCurrentFunds() {
 }
 
 function successUpdateCurrentFunds(response) {
-    console.log(response);
     currentFunds = JSON.parse(response.d);
     changeCurrentFunds(currentFunds);
 }
 
 function changeCurrentFunds(fund_data) {
-    console.log(fund_data);
     var funds = fund_data.funds;
     var saved_funds = fund_data.saved_funds;
     //$("#funds").html("<b>" + funds + "</b><small> MKD</small>");
@@ -142,7 +140,12 @@ function initSpendings(data) {
     chart2 = new BMChart("#chart_monthlySpendings", "pie", data.d, null, true);
 }
 
-function post_transaction(event, type, cat_id) {
+function post_transaction(event, type) {
+
+    //1 - income
+    //2 - spending
+    //3 - wishlist
+    //4 - transfer
 
     event.preventDefault();
     waitingSuccess();
@@ -167,7 +170,7 @@ function post_transaction(event, type, cat_id) {
         category: category_name,
         amount: amount
     }
-    
+
 
     //Savings
     if (type == '1' || type == 1) {
@@ -176,6 +179,14 @@ function post_transaction(event, type, cat_id) {
 
     //Spendings
     if (type == '2' || type == 2) {
+        chart2.addTransaction(transaction);
+    }
+
+    //Transfer
+    if (type == '4' || type == 4) {
+        transaction.category = "Savings";
+        category = 27;
+        amount *= -1;
         chart2.addTransaction(transaction);
     }
 
@@ -202,22 +213,24 @@ function post_transaction(event, type, cat_id) {
         //Maybe loading indicator?
         //jsonObj
         var json_fund_data = null;
-
-        if (jsonObj.category != "Zasteda") {
-            json_fund_data = {
-                funds: currentFunds.funds + jsonObj.amount,
-                saved_funds: currentFunds.saved_funds
+        if (jsonObj.type == 3 || jsonObj.type == "3") {
+            console.log("Wishlist added");
+        } else {
+            if (jsonObj.category != "Zasteda") {
+                json_fund_data = {
+                    funds: currentFunds.funds + jsonObj.amount,
+                    saved_funds: currentFunds.saved_funds
+                }
+            } else {
+                json_fund_data = {
+                    funds: currentFunds.funds + jsonObj.amount,
+                    saved_funds: currentFunds.saved_funds + Math.abs(jsonObj.amount)
+                }
+                console.log("SAVED DATA");
+                console.log(json_fund_data);
             }
+            changeCurrentFunds(json_fund_data);
         }
-        else {
-            json_fund_data = {
-                funds: currentFunds.funds + jsonObj.amount,
-                saved_funds: currentFunds.saved_funds + Math.abs(jsonObj.amount)
-            }
-            console.log("SAVED DATA");
-            console.log(json_fund_data);
-        }
-        changeCurrentFunds(json_fund_data);
         showSuccess();
         //console.log(response);
     }
