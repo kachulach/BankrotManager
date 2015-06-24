@@ -10,6 +10,7 @@
     <style>
         .removeTransaction:hover {
             color: red;
+            cursor:pointer;
         }
     </style>
 

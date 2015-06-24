@@ -2,6 +2,13 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentplaceHolder1" runat="server">
     <script src="Scripts/Page JS/wishlist.js"></script>
+
+    <style>
+        .remove-wishlist-item:hover {
+            color: red;
+            cursor:pointer;
+        }
+    </style>
     <div class="h1 text-center">Wishlist</div>
 
     <div class="row">
@@ -33,7 +40,7 @@
                                         <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
                                         <td><%# DataBinder.Eval(Container.DataItem, "Date") %></td>
                                         <td>
-                                            <button class="ui-button-text-icon-primary buy-wishlist-item" data-id="<%# DataBinder.Eval(Container.DataItem, "ID")%>">Buy</button>
+                                            <button class="btn btn-block btn-xs btn-<%# GetClass(DataBinder.Eval(Container.DataItem, "Amount").ToString()) %> buy-wishlist-item" data-id="<%# DataBinder.Eval(Container.DataItem, "ID")%>">Buy</button>
                                         </td>
                                         <td class="remove-wishlist-item" data-id="<%# DataBinder.Eval(Container.DataItem, "ID")%>"><i class="glyphicon glyphicon-remove"></i></td>
                                     </tr>

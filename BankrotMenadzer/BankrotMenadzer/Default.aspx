@@ -98,7 +98,7 @@
                                 <tr class="active">
                                     <td style="vertical-align: middle"><%# DataBinder.Eval(Container.DataItem, "Name") %></td>
                                     <td style="vertical-align: middle"><%# DataBinder.Eval(Container.DataItem, "Amount") %> MKD</td>
-                                    <td><a class="btn btn-xs buy-wishlist-item" data-id="<%# DataBinder.Eval(Container.DataItem, "ID") %>">Buy now!</a></td>
+                                    <td><a class="btn btn-xs btn-default buy-wishlist-item" data-id="<%# DataBinder.Eval(Container.DataItem, "ID") %>">Buy now!</a></td>
                                 </tr>
                             </ItemTemplate>
                         </asp:Repeater>
