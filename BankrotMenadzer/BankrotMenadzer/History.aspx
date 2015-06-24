@@ -13,25 +13,25 @@
         }
     </style>
 
-    <div id="message-success" class="alert text-center hidden" role="alert" style="z-index:100; width:200px; height:50px; position:fixed; top:40px; right:10px;">
+    <div id="message-success" class="alert text-center hidden" role="alert" style="z-index: 100; width: 200px; height: 50px; position: fixed; top: 40px; right: 10px;">
         Message about transaction here
     </div>
 
     <div class="h1 text-center">History</div>
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1">
-        <div class="well">
-        <div id="calendar-picker" class="selectbox">
-            <button class="btn btn-success btn-block" id="button-select-date"><span class="glyphicon glyphicon-calendar"></span>Select date</button>
-        </div>
-        </div>
+            <div class="well">
+                <div id="calendar-picker" class="selectbox">
+                    <button class="btn btn-success btn-block" id="button-select-date"><span class="glyphicon glyphicon-calendar"></span>Select date</button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title text-center"><b>Statistics</b></h3>
+                    <h3 class="panel-title text-center"><b>Category statistics</b></h3>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -63,87 +63,41 @@
         </div>
     </div>
 
-    <div class="bar-chart">
-        <h3>Category chart</h3>
-        <canvas id="chart-category-spendings" width="250" height="250"></canvas>
-        <div class="chart-legend">
-        </div>
-    </div>
-
     <div class="row">
-         <div class="col-xs-10 col-xs-offset-1">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title text-center"><b>Charts</b></h3>
-            </div>
-            <div class="panel-body">
-                <!-- <div class="col-lg-9">-->
-                <!-- progress bar -->
-                <div class="progress">
-                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                        <span>20%</span>
-                    </div>
-                    <span>Pictures</span>
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-center"><b>Data</b></h3>
                 </div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                        <span>40%</span>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Category</th>
+                                    <th class="text-center">Cost</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <asp:Repeater runat="server" ID="repeater_rawdata">
+                                    <ItemTemplate>
+                                        <tr class="<%# Container.ItemIndex % 2 == 0 ? "success" : "warning" %>">
+                                            <td><%# DataBinder.Eval(Container.DataItem, "Name") %></td>
+                                            <td><%# DataBinder.Eval(Container.DataItem, "Category.Name") %></td>
+                                            <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
+                                            <td><%# DataBinder.Eval(Container.DataItem, "Date") %></td>
+                                            <td class="removeTransaction" data-id="<%# DataBinder.Eval(Container.DataItem, "ID")%>"><i class="glyphicon glyphicon-remove"></i></td>
+                                        </tr>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                            </tbody>
+                        </table>
                     </div>
-                    <span>Documents</span>
-                </div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                        <span>60%</span>
-                    </div>
-                    <span>Music</span>
-                </div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                        <span>80%</span>
-                    </div>
-                    <span>Video</span>
-                </div>
-                <!--</div>-->
-            </div>
-        </div>
-    </div>
-</div>
-
-    <div class="row">
-         <div class="col-xs-10 col-xs-offset-1">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title text-center"><b>Data</b></h3>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped text-center">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Category</th>
-                                <th class="text-center">Cost</th>
-                                <th class="text-center">Date</th>
-                                <th class="text-center">Remove</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <asp:Repeater runat="server" ID="repeater_rawdata">
-                                <ItemTemplate>
-                                    <tr class="<%# Container.ItemIndex % 2 == 0 ? "success" : "warning" %>">
-                                        <td><%# DataBinder.Eval(Container.DataItem, "Name") %></td>
-                                        <td><%# DataBinder.Eval(Container.DataItem, "Category.Name") %></td>
-                                        <td><%# DataBinder.Eval(Container.DataItem, "Amount") %></td>
-                                        <td><%# DataBinder.Eval(Container.DataItem, "Date") %></td>
-                                        <td class="removeTransaction" data-id="<%# DataBinder.Eval(Container.DataItem, "ID")%>"><i class="glyphicon glyphicon-remove"></i></td>
-                                    </tr>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
-        </div>
 </asp:Content>

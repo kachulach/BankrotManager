@@ -175,7 +175,7 @@ namespace BankrotManager
                 case "3":
                     break;
             }
-            transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0, 0)), DateTime.Now, int.Parse(type));
+            transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), DateTime.Now.Subtract(new TimeSpan(7, 0, 0, 0, 0)), DateTime.Now, int.Parse(type));
             //return chart data
             return HelperTools.FormatToChartData(transactions);
         }
