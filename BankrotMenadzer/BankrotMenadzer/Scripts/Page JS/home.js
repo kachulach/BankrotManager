@@ -10,6 +10,12 @@ $(document).ready(function () {
     fields.comment = $("#comment");
     fields.success = $("#message-success");
 
+
+    $(".buy-wishlist-item").on('click', function (event) {
+        var id = $(this).data('id');
+        buy_wishlist_item(id, $(this).parent());
+    });
+
     $("#transaction-add").on('click', function (event) {
         if (!$(this).hasClass('disabled')) {
             post_transaction(event, 1);
@@ -272,4 +278,28 @@ function hideSuccess() {
     if (!fields.success.hasClass('hidden')) {
         fields.success.addClass('hidden');
     }
+}
+
+function buy_wishlist_item(id, row) {
+
+    $.ajax({
+        type: 'POST',
+        url: 'Wishlist.aspx/AJAX_BuyWishlist',
+        data: '{ "id": ' + id + ' }',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            wish_success(data);
+            row.hide();
+        },
+        failure: function(data) {
+            console.log(data)
+        }
+    });
+
+}
+
+function wish_success(data) {
+    location.reload();
 }

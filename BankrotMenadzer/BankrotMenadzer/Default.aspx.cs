@@ -24,8 +24,9 @@ namespace BankrotManager
 
     public partial class Default : System.Web.UI.Page
     {
-
-        Database database;
+        private int user_id;
+        private int total_funds;
+        Database database = new Database();
         public static Dictionary<int, string> Categories;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,6 +34,11 @@ namespace BankrotManager
             {
                 Response.Redirect("Login.aspx");
             }
+
+            user_id = int.Parse(Session["user_id"].ToString());
+
+            total_funds = database.currentFunds(user_id) + database.getSavedFunds(user_id);
+
             if (repeater_categories != null)
             {
                 Categories = new Dictionary<int, string>();
@@ -44,6 +50,24 @@ namespace BankrotManager
 
                 repeater_categories.DataSource = HelperTools.Categories;
                 repeater_categories.DataBind();
+            }
+
+            var wishlist = database.getAffordableItemsWishlist(user_id, total_funds);
+            if (wishlist != null)
+            {
+                var rnd = new Random();
+                var result = wishlist.OrderBy(item => rnd.Next());
+                if (wishlist.Count <= 3)
+                {
+                    repeater_wishlist.DataSource = wishlist;
+                    repeater_wishlist.DataBind();
+                }
+                else
+                {
+                    var data = result.Take(3);
+                    repeater_wishlist.DataSource = data;
+                    repeater_wishlist.DataBind();
+                }
             }
         }
         /// <summary>
@@ -123,7 +147,7 @@ namespace BankrotManager
         public static string AJAX_GetCurrentFunds()
         {
             Database db = new Database();
-            int user_id = (int) HttpContext.Current.Session["user_id"];
+            int user_id = (int)HttpContext.Current.Session["user_id"];
             int saved_funds = db.getSavedFunds(user_id);
             int curr_funds = db.currentFunds(user_id);
             StringBuilder sb = new StringBuilder();
@@ -166,6 +190,14 @@ namespace BankrotManager
             var transactions = db.getFromToTransactions(int.Parse(HttpContext.Current.Session["user_id"].ToString()), dateFrom, dateTo, int.Parse(type));
             //return chart data
             return HelperTools.FormatTransactions(transactions);
+
+        }
+
+
+
+        protected void btn_BuyWishlist_OnClick(object sender, EventArgs e)
+        {
+            
         }
     }
 }

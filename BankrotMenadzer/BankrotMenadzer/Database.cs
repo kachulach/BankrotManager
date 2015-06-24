@@ -110,10 +110,11 @@ namespace BankrotManager
             try
             {
                 con.Open();
-
-                string query = "SELECT * FROM transaction " +
-                    "WHERE wishlist=true AND bought=false AND price <= " + money +
-                    " user_id=" + user_id;
+                string query =
+                    string.Format(
+                        "SELECT * FROM transaction WHERE wishlist=true AND bought=false AND price <= {0} AND user_id={1};",
+                        money, user_id);
+                
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(query, con);
 
@@ -128,11 +129,11 @@ namespace BankrotManager
                     int cat_id = Convert.ToInt32(row["category_id"]);
                     int price = Convert.ToInt32(row["price"]);
                     DateTime datum = (DateTime)row["datum"];
-                    int kom_id = Convert.ToInt32(row["comment_id"]);
+                    //int kom_id = Convert.ToInt32(row["comment_id"]);
                     bool wish = Convert.ToBoolean(row["wishlist"]);
                     bool bo = Convert.ToBoolean(row["bought"]);
 
-                    transactions.Add(new Transaction(tran_id, name, cat_id, price, datum, kom_id, user_id, wish, bo));
+                    transactions.Add(new Transaction(tran_id, name, cat_id, price, datum, 0, user_id, wish, bo));
                 }
                 return transactions;
             }
