@@ -4,6 +4,7 @@
     <div class="h1 text-center">Wishlist</div>
 
     <div class="row">
+         <div class="col-xs-10 col-xs-offset-1">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title text-center"><b>Wishlist</b></h3>
@@ -39,5 +40,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </asp:Content>

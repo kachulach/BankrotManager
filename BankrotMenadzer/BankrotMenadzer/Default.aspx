@@ -34,7 +34,7 @@
             </div>
             <div class="row">
                 
-                <div class="col-md-6 col-md-offset-0">
+                <div class="col-xs-6 col-xs-offset-0">
                     <div class="form-group">
                         <label for="category">Category:</label>
                         <div class="dropdown">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-xs-6">
                     <div class="form-group">
                         <label for="comment">Comment:</label>
                         <input class="form-control" id="comment" placeholder="Comment">
@@ -61,19 +61,19 @@
                 
             </div>
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-xs-2">
                     <button class="btn btn-success btn-block" id="transaction-add" type="submit"><span class="glyphicon glyphicon-plus"></span> Income</button>
                 </div>
-                <div class="col-md-2">
+                <div class="col-xs-2">
                     <button class="btn btn-danger btn-block" id="transaction-remove" type="submit"><span class="glyphicon glyphicon-minus"></span> Spending</button>
                 </div>
-                <div class="col-md-2">
+                <div class="col-xs-2">
                     <button class="btn btn-warning btn-block" id="transaction-transfer" type="submit"><span class="glyphicon glyphicon-euro"></span> Save</button>
                 </div>
-                <div class="col-md-3">
+                <div class="col-xs-3">
                     <button class="btn btn-primary btn-block" id="transaction-wishlist" type="submit"><span class="glyphicon glyphicon-piggy-bank"></span>Add to wishlist</button>
                 </div>
-                <div class="col-md-2">
+                <div class="col-xs-3">
                     <button class="btn btn-info btn-block" id="transaction-clear-form"><span class="glyphicon glyphicon-remove"></span>Clear form</button>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 <div style="height: 20px"></div>
             </div>
             <div class="row">
-                <div class="col-md-12 text-center">                    
+                <div class="col-xs-12 text-center">                    
                     <span id="message-success" class="alert alert-success text-center hidden" role="alert">Message about transaction here</span>
                 </div>                
             </div>
@@ -114,7 +114,7 @@
     </div>
     <hr />
     <div class="row">
-        <div class="col-md-3 col-md-offset-2">
+        <div class="col-xs-3 col-xs-offset-2">
             <div class="pie-chart-week">
                 <h3>Income chart</h3>
                 <canvas id="chart_weekSpendings"></canvas>
@@ -122,7 +122,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-md-offset-2">
+        <div class="col-xs-3 col-xs-offset-2">
             <div id="pie-chart-monthly">
                 <h3>Spending chart</h3>
                 <canvas id="chart_monthlySpendings" ></canvas>

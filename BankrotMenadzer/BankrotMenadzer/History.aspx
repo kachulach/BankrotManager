@@ -13,18 +13,22 @@
         }
     </style>
 
-    <div id="message-success" class="alert text-center hidden" role="alert" style="width:200px; height:50px; position:fixed; top:40px; right:10px;">
+    <div id="message-success" class="alert text-center hidden" role="alert" style="z-index:100; width:200px; height:50px; position:fixed; top:40px; right:10px;">
         Message about transaction here
     </div> 
 
     <div class="h1 text-center">History</div>
     <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+        <div class="well">
         <div id="calendar-picker" class="selectbox">
             <button class="btn btn-success btn-block" id="button-select-date"><span class="glyphicon glyphicon-calendar"></span>Select date</button>
         </div>
+        </div>
+        </div>
     </div>
     <div class="row">
-        <div class="">
+        <div class="col-xs-10 col-xs-offset-1">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title text-center"><b>Statistics</b></h3>
@@ -62,6 +66,7 @@
    
 
     <div class="row">
+         <div class="col-xs-10 col-xs-offset-1">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title text-center"><b>Charts</b></h3>
@@ -97,8 +102,10 @@
             </div>
         </div>
     </div>
+</div>
 
     <div class="row">
+         <div class="col-xs-10 col-xs-offset-1">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title text-center"><b>Data</b></h3>
@@ -133,4 +140,5 @@
             </div>
         </div>
     </div>
+        </div>
 </asp:Content>
